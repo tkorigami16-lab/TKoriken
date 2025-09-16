@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function Awake() {
-  const basePath = "https://tk-oriken.github.io";
+  const basePath = "https://tkorigami16-lab.github.io/TKoriken";
   const imgExt = [".png", ".jpeg"];
 
   document.documentElement.classList.add("no-scroll");
@@ -36,7 +36,7 @@ async function Awake() {
   //Set Awake Setting
   fetch(basePath + "/data/Resources/Setting.json")
     .then((res) => res.json())
-    .then((set) => {
+    .then(async (set) => {
       let mobilemenuBox = document.getElementById("mobileMenuList");
       let desktopmenubox = document.getElementById("desktopMenuList");
       maxTask += 2 * set.MenuItems.length;
@@ -58,6 +58,19 @@ async function Awake() {
       }
 
       let titleImage = document.getElementById("TitleImage");
+      for (let num = 0; num < imgExt.length; num++) {
+        if (
+          (await checkFileExists(
+            basePath + "/data/Resources/Title" + imgExt[i]
+          )) == true
+        ) {
+          titleImage.src = basePath + "/data/Resources/Title" + imgExt[i];
+          console.log(basePath + "/data/Resources/Title" + imgExt[i] + "Exist");
+          break;
+        } else {
+          console.log(basePath + "/data/Resources/Title" + imgExt[i] + "NE");
+        }
+      }
     })
     .catch((err) => {
       console.log("Not Found : Setting.json");
@@ -100,19 +113,19 @@ async function Awake() {
         fetch(basePath + "/data/Products/" + fileName + ".json")
           .then((res) => res.json())
           .then((data) => {
-            var pro = document.createElement("p");
+            let pro = document.createElement("p");
             pro.textContent = data.productName;
             item.appendChild(pro);
 
-            var inv = document.createElement("p");
+            let inv = document.createElement("p");
             inv.textContent = data.inventor;
             item.appendChild(inv);
 
-            var manu = document.createElement("p");
+            let manu = document.createElement("p");
             manu.textContent = data.manufacturer;
             item.appendChild(manu);
 
-            var paper = document.createElement("p");
+            let paper = document.createElement("p");
             paper.textContent = data.paperSize;
             item.appendChild(paper);
           });
@@ -144,7 +157,7 @@ async function Awake() {
     }
   });
 
-  await delay(2000);
+  await delay(200000);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
