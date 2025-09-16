@@ -1,0 +1,12 @@
+{
+    "MenuItems" : [
+        {
+            "buttonName" : "Home",
+            "url" : "index.html"
+        },
+        {
+            "buttonName" : "特設ページ",
+            "url" : "index.html"
+        }
+    ]
+}

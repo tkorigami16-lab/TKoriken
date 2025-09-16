@@ -1,0 +1,263 @@
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
+p {
+  color: black;
+  font-size: 18px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  height: 3px;
+  width: 25px;
+  background: #333;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+.menu {
+  display: none;
+}
+
+.menu-toggle:checked ~ .menu {
+  display: block;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #060014;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+
+/* ベーススタイル */
+body {
+  margin: 0;
+  font-family: "Yu Mincho", "Hiragino Mincho Pro", serif;
+  background-color: #03000f;
+  color: #333;
+}
+
+/* 中央揃えのコンテナ */
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  padding-left: 220px;
+  text-align: center;
+  background-color: #5a5a5a;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0);
+  pointer-events: all; /* ユーザー操作を遮断 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+#TitleImage {
+  height: 100vh;
+  width: 100vh;
+  text-align: center;
+  align-items: center;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center; /* 横方向中央 */
+  background-color: #f0f0f000;
+}
+
+.wrapper.hidden {
+  display: none;
+}
+
+.progress-container {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  max-width: 400px;
+  z-index: 209;
+  width: 100%;
+  background-color: #606060;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  overflow: hidden;
+  height: 12px;
+}
+
+.progress-bar {
+  position: relative;
+  text-align: center;
+  z-index: 210;
+  height: 14px;
+  background-color: #ffbee8;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.loadSpan {
+  display: flex;
+  padding: 1rem;
+  margin-top: -20px;
+  font-size: 14px;
+  color: #615e85;
+  text-align: center;
+  align-items: center;
+}
+
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  padding: 1rem;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 200px;
+  left: 0;
+  width: 100%;
+  background: #444;
+  color: white;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu li {
+  padding: 1rem;
+  border-bottom: 1px solid #555;
+}
+
+.desktop-menu {
+  position: absolute;
+  display: none;
+  width: 200px;
+  padding: 1rem;
+  background: #eee;
+  height: 100%;
+}
+
+/* スマホ表示 */
+@media (max-width: 768px) {
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #5a5a5a;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    background: #444;
+    color: white;
+  }
+
+  .mobile-menu.active {
+    display: block;
+    position: sticky;
+    margin-top: 80px;
+    top: 200px;
+    left: 0;
+  }
+}
+
+/* PC表示 */
+@media (min-width: 769px) {
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #5a5a5a;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .desktop-menu {
+    align-items: center;
+    text-align: center;
+    display: flex;
+    position: fixed;
+    padding: 1rem;
+    margin-left: -270px;
+    background-color: #202055;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+  }
+
+  .hamburger,
+  .mobile-menu {
+    display: none;
+  }
+}
