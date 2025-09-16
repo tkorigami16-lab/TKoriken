@@ -19,6 +19,7 @@ async function Awake() {
   let loading = document.getElementById("loadPanel");
   loading.classList.remove("hide");
 
+  //Set Wrap
   let wrap = document.getElementById("wrap");
   wrap.classList.remove("hidden");
   let prog = document.getElementById("prog");
@@ -34,13 +35,14 @@ async function Awake() {
   };
 
   //Set Awake Setting
-  fetch(basePath + "/data/Resources/Setting.json")
+  await fetch(basePath + "/data/Resources/Setting.json")
     .then((res) => res.json())
     .then(async (set) => {
       let mobilemenuBox = document.getElementById("mobileMenuList");
       let desktopmenubox = document.getElementById("desktopMenuList");
       maxTask += 2 * set.MenuItems.length;
 
+      //Menu
       for (let i = 0; i < set.MenuItems.length; i++) {
         let mm = document.createElement("li");
         let link = document.createElement("a");
@@ -56,21 +58,15 @@ async function Awake() {
         carry++;
         SetProgress();
       }
+      console.log("Menu SetUp Complete");
 
+      //Title
       let titleImage = document.getElementById("TitleImage");
-      for (let num = 0; num < imgExt.length; num++) {
-        if (
-          (await checkFileExists(
-            basePath + "/data/Resources/Title" + imgExt[i]
-          )) == true
-        ) {
-          titleImage.src = basePath + "/data/Resources/Title" + imgExt[i];
-          console.log(basePath + "/data/Resources/Title" + imgExt[i] + "Exist");
-          break;
-        } else {
-          console.log(basePath + "/data/Resources/Title" + imgExt[i] + "NE");
-        }
-      }
+      console.log(
+        await checkFileExists(basePath + "/data/Resources/Title.png")
+      );
+
+      console.log("Title SetUp Complete");
     })
     .catch((err) => {
       console.log("Not Found : Setting.json");
@@ -171,7 +167,6 @@ async function Awake() {
 
 async function checkFileExists(url) {
   console.log(url);
-
   try {
     const response = await fetch(url);
 
