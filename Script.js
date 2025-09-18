@@ -1,12 +1,12 @@
+//画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOMの読み込みが完了しました");
-
   await Awake();
 });
 
 async function Awake() {
-  const basePath = "https://tkorigami16-lab.github.io/TKoriken";
-  const imgExt = [".png", ".jpeg"];
+  const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
+  const imgExt = [".png", ".jpeg", ".gif", ".svg"]; //画像の拡張子をセット（場合によっては追加して良い）
 
   document.documentElement.classList.add("no-scroll");
   document.body.classList.add("no-scroll");
@@ -38,9 +38,26 @@ async function Awake() {
   await fetch(basePath + "/data/Resources/Setting.json")
     .then((res) => res.json())
     .then(async (set) => {
+      let black = document.getElementById("Black");
+
       let mobilemenuBox = document.getElementById("mobileMenuList");
       let desktopmenubox = document.getElementById("desktopMenuList");
       maxTask += 2 * set.MenuItems.length;
+
+      //Body
+      let body = document.getElementById("body");
+      for (let i = 0; i < imgExt.length; i++) {
+        if (
+          (await checkFileExists(
+            basePath + "/data/Resources/backgroundImage" + imgExt[i]
+          )) == true
+        ) {
+          body.style.backgroundImage =
+            basePath + "/data/Resources/backgroundImage" + imgExt[i];
+          console.log("body SetUp Complete");
+          break;
+        }
+      }
 
       //Menu
       for (let i = 0; i < set.MenuItems.length; i++) {
@@ -62,11 +79,38 @@ async function Awake() {
 
       //Title
       let titleImage = document.getElementById("TitleImage");
-      console.log(
-        await checkFileExists(basePath + "/data/Resources/Title.png")
-      );
+      for (let i = 0; i < imgExt.length; i++) {
+        if (
+          (await checkFileExists(
+            basePath + "/data/Resources/title" + imgExt[i]
+          )) == true
+        ) {
+          titleImage.src = basePath + "/data/Resources/title" + imgExt[i];
+          console.log("Title SetUp Complete");
+          break;
+        }
+      }
 
-      console.log("Title SetUp Complete");
+      /*
+      //Back
+      let titlebackImage = document.getElementById("TitleBack");
+      for (let i = 0; i < imgExt.length; i++) {
+        if (
+          (await checkFileExists(
+            basePath + "/data/Resources/titleback" + imgExt[i]
+          )) == true
+        ) {
+          titlebackImage.src =
+            basePath + "/data/Resources/titleback" + imgExt[i];
+          console.log("Title SetUp Complete");
+          break;
+        }
+      }
+      */
+
+      const target = document.getElementById("Black");
+      target.style.opacity = 0; // 徐々に透明に
+      black.classList.add("hidden");
     })
     .catch((err) => {
       console.log("Not Found : Setting.json");
@@ -153,15 +197,20 @@ async function Awake() {
     }
   });
 
-  await delay(200000);
+  prog.style.width = "100%";
+  prog.style.backgroundColor = "#44dc81";
+  span.textContent = "Complete Loading";
+
+  await delay(800);
+  wrap.style.display = "None";
+  loading.style.opacity = 0;
+  await delay(2000);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
   document.body.classList.remove("no-scroll");
   over.classList.add("hidden");
-
   wrap.classList.add("hidden");
-
   loading.classList.add("hide");
 }
 
