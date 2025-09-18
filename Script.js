@@ -204,7 +204,19 @@ async function Awake() {
   await delay(800);
   wrap.style.display = "None";
   loading.style.opacity = 0;
-  await delay(2000);
+  const cont = document.getElementsById("cont");
+  for (let i = 0; i < imgExt.length; i++) {
+    if (
+      (await checkFileExists(basePath + "/data/Resources/title" + imgExt[i])) ==
+      true
+    ) {
+      cont.style.backgroundImage =
+        basePath + "/data/Resources/title" + imgExt[i];
+      console.log("container SetUp Complete");
+      break;
+    }
+  }
+  cont.style.backgroundImage = await delay(2000);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
