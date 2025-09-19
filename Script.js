@@ -34,26 +34,27 @@ async function Awake() {
     span.textContent = carry + " / " + maxTask;
   };
 
+  let black = document.getElementById("Black");
+
   //Set Awake Setting
   await fetch(basePath + "/data/Resources/Setting.json")
     .then((res) => res.json())
     .then(async (set) => {
-      let black = document.getElementById("Black");
-
       let mobilemenuBox = document.getElementById("mobileMenuList");
       let desktopmenubox = document.getElementById("desktopMenuList");
       maxTask += 2 * set.MenuItems.length;
 
       //Body
-      let body = document.getElementById("body");
+      let BGI = document.getElementById("BackGroundImage");
       for (let i = 0; i < imgExt.length; i++) {
         if (
           (await checkFileExists(
             basePath + "/data/Resources/backgroundImage" + imgExt[i]
           )) == true
         ) {
-          body.style.backgroundImage =
-            basePath + "/data/Resources/backgroundImage" + imgExt[i];
+          let str = `url(${basePath}/data/Resources/backgroundImage${imgExt[i]})`;
+          BGI.style.backgroundImage = str;
+          loading.style.backgroundImage = str;
           console.log("body SetUp Complete");
           break;
         }
@@ -107,14 +108,14 @@ async function Awake() {
         }
       }
       */
-
-      const target = document.getElementById("Black");
-      target.style.opacity = 0; // 徐々に透明に
-      black.classList.add("hidden");
     })
     .catch((err) => {
       console.log("Not Found : Setting.json");
     });
+
+  const target = document.getElementById("Black");
+  target.style.opacity = 0; // 徐々に透明に
+  black.classList.add("hidden");
 
   //Load and Create Our Products
   await fetch(basePath + "/data/index.json")
@@ -204,7 +205,7 @@ async function Awake() {
   await delay(800);
   wrap.style.display = "None";
   loading.style.opacity = 0;
-  const cont = document.getElementsById("cont");
+  const cont = document.getElementById("cont");
   for (let i = 0; i < imgExt.length; i++) {
     if (
       (await checkFileExists(basePath + "/data/Resources/title" + imgExt[i])) ==

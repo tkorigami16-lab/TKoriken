@@ -65,12 +65,24 @@ p {
 body {
   margin: 0;
   font-family: "Yu Mincho", "Hiragino Mincho Pro", serif;
-  background-color: #03000f;
-  color: #333;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#BackGroundImage {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  color: #000000;
+  filter: opacity(40);
 }
 
 /* 中央揃えのコンテナ */
 .container {
+  z-index: 100;
   max-width: 800px;
   margin: 50px auto;
   padding: 20px;
@@ -105,12 +117,11 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: 1000;
+  color: #000000;
   background: rgba(0, 0, 0, 255);
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 1;
-  transition: opacity 1s;
 }
 
 #Black.hidden {
