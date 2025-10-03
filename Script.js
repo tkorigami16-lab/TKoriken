@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function Awake() {
   const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-  const imgExt = [".png", ".jpeg", ".gif", ".svg"]; //画像の拡張子をセット（場合によっては追加して良い）
+  const imgExt = [".HEIC", ".png", ".jpg", ".JPG", ".jpeg", ".gif", ".svg"]; //画像の拡張子をセット（場合によっては追加して良い）
 
   document.documentElement.classList.add("no-scroll");
   document.body.classList.add("no-scroll");
@@ -53,6 +53,26 @@ async function Awake() {
           )) == true
         ) {
           let str = `url(${basePath}/data/Resources/backgroundImage${imgExt[i]})`;
+
+          if (i == 0) {
+            try {
+              const convertedBlob = await heic2any({
+                blob: str,
+                toType: "image/jpeg",
+                quality: 0.9, // 0〜1で画質調整
+              });
+
+              const imgURL = URL.createObjectURL(convertedBlob);
+              BGI.style.backgroundImage = imgURL;
+              loading.style.backgroundImage = imgURL;
+              console.log("body SetUp Complete");
+              break;
+            } catch (error) {
+              console.error("変換エラー:", error);
+              alert("変換に失敗しました");
+            }
+          }
+
           BGI.style.backgroundImage = str;
           loading.style.backgroundImage = str;
           console.log("body SetUp Complete");
@@ -141,7 +161,7 @@ async function Awake() {
             img.width = 200;
             img.height = 200;
             item.appendChild(img);
-            created = true;
+            //created = true;
             break;
           }
         }
@@ -167,7 +187,7 @@ async function Awake() {
             item.appendChild(manu);
 
             let paper = document.createElement("p");
-            paper.textContent = data.paperSize;
+            paper.textContent = data.paper;
             item.appendChild(paper);
           });
         //#endregion
@@ -217,14 +237,14 @@ async function Awake() {
       break;
     }
   }
-  cont.style.backgroundImage = await delay(2000);
+  await delay(2000);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
   document.body.classList.remove("no-scroll");
   over.classList.add("hidden");
   wrap.classList.add("hidden");
-  loading.classList.add("hide");
+  loading.classList.add("hidden");
 }
 
 async function checkFileExists(url) {
