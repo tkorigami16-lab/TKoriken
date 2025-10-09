@@ -147,15 +147,17 @@ async function Awake() {
       for (let num = 0; num < fileList.length; num++) {
         let item = document.createElement("li"); //子オブジェクトを作成
         let fileName = fileList[num];
+        let img = document.createElement("img");
+        let d = document.createElement("div");
+        d.classList.add("captions");
 
-        //#region : Set Image
+        //Set Image
         for (let i = 0; i < imgExt.length; i++) {
           if (
             (await checkFileExists(
               basePath + "/data/Products/" + fileName + imgExt[i]
             )) == true
           ) {
-            let img = document.createElement("img");
             img.src = basePath + "/data/Products/" + fileName + imgExt[i];
             img.alt = `(${imgExt[i]})`;
             img.width = 200;
@@ -165,7 +167,6 @@ async function Awake() {
             break;
           }
         }
-        //#endregion
 
         carry++;
         SetProgress();
@@ -175,25 +176,40 @@ async function Awake() {
           .then((res) => res.json())
           .then((data) => {
             let pro = document.createElement("p");
-            pro.textContent = data.productName;
-            item.appendChild(pro);
+            pro.textContent = "題 : " + data.productName;
+            d.appendChild(pro);
 
             let inv = document.createElement("p");
-            inv.textContent = data.inventor;
-            item.appendChild(inv);
+            inv.textContent = "創作 : " + data.inventor;
+            inv.style.fontSize = "16px";
+            d.appendChild(inv);
 
             let manu = document.createElement("p");
-            manu.textContent = data.manufacturer;
-            item.appendChild(manu);
+            manu.textContent = "作成 : " + data.manufacturer;
+            manu.style.fontSize = "16px";
+            d.appendChild(manu);
 
             let paper = document.createElement("p");
-            paper.textContent = data.paper;
-            item.appendChild(paper);
+            paper.textContent = "紙 : " + data.paper;
+            paper.style.fontSize = "14px";
+            d.appendChild(paper);
           });
         //#endregion
 
         carry++;
         SetProgress();
+
+        if (num % 2 == 1) {
+          item.classList.add("left");
+          d.classList.add("right");
+          item.appendChild(img);
+          item.appendChild(d);
+        } else {
+          item.classList.add("right");
+          d.classList.add("left");
+          item.appendChild(d);
+          item.appendChild(img);
+        }
 
         console.log(item);
         imageList.appendChild(item);
