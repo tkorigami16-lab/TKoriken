@@ -1,3 +1,8 @@
+let windowSize = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOMの読み込みが完了しました");
@@ -144,8 +149,12 @@ async function Awake() {
       let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
       maxTask += 2 * fileList.length;
 
+      let RLnum = 0;
       for (let num = 0; num < fileList.length; num++) {
         let item = document.createElement("li"); //子オブジェクトを作成
+        let con = document.createElement("div");
+        con.style.display = "flex";
+
         let fileName = fileList[num];
         let img = document.createElement("img");
         let d = document.createElement("div");
@@ -175,7 +184,7 @@ async function Awake() {
           item.remove();
           img.remove();
           d.remove();
-          console.log(fileName + "img not found");
+          console.log(fileName + " img not found");
           continue;
         }
 
@@ -216,27 +225,29 @@ async function Awake() {
           item.remove();
           img.remove();
           d.remove();
-          console.log(fileName + "txt not found");
+          console.log(fileName + " txt not found");
           continue;
         }
 
         carry++;
         SetProgress();
 
-        if (num % 2 == 1) {
+        if (RLnum % 2 == 1) {
           item.classList.add("left");
           d.classList.add("right");
-          item.appendChild(img);
-          item.appendChild(d);
+          con.appendChild(img);
+          con.appendChild(d);
         } else {
           item.classList.add("right");
           d.classList.add("left");
-          item.appendChild(d);
-          item.appendChild(img);
+          con.appendChild(d);
+          con.appendChild(img);
         }
+        item.appendChild(con);
 
-        console.log(item);
+        RLnum++;
         imageList.appendChild(item);
+        console.log(fileName + " Created");
       }
     })
     .catch((err) => {
@@ -253,10 +264,21 @@ async function Awake() {
 
   // スクロール追従（スマホのみ）
   window.addEventListener("scroll", () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1279) {
       mobileMenu.style.top = `${window.scrollY + 60}px`;
     }
   });
+
+  /*
+  window.addEventListener("resize", () => {
+    if (window.width <= 768 && windowSize > 768) {
+    } else if (window.window > 768 && windowSize <= 768) {
+    }
+
+    windowSize.width = window.innerWidth;
+    windowSize.height = windowSize.innerHeight;
+  });
+  */
 
   prog.style.width = "100%";
   prog.style.backgroundColor = "#44dc81";
@@ -288,7 +310,6 @@ async function Awake() {
 }
 
 async function checkFileExists(url) {
-  console.log(url);
   try {
     const response = await fetch(url);
 
