@@ -151,6 +151,7 @@ async function Awake() {
         let d = document.createElement("div");
         d.classList.add("captions");
 
+        let imgOk = false;
         //Set Image
         for (let i = 0; i < imgExt.length; i++) {
           if (
@@ -163,16 +164,27 @@ async function Awake() {
             img.width = 200;
             img.height = 200;
             item.appendChild(img);
-            //created = true;
+            imgOk = true;
             break;
           }
+        }
+
+        if (!imgOk) {
+          carry += 2;
+          SetProgress();
+          item.remove();
+          img.remove();
+          d.remove();
+          console.log(fileName + "img not found");
+          continue;
         }
 
         carry++;
         SetProgress();
 
+        let txtOk = false;
         //#region : Set Texts
-        fetch(basePath + "/data/Products/" + fileName + ".json")
+        await fetch(basePath + "/data/Products/" + fileName + ".json")
           .then((res) => res.json())
           .then((data) => {
             let pro = document.createElement("p");
@@ -193,8 +205,20 @@ async function Awake() {
             paper.textContent = "紙 : " + data.paper;
             paper.style.fontSize = "14px";
             d.appendChild(paper);
+
+            txtOk = true;
           });
         //#endregion
+
+        if (!txtOk) {
+          carry++;
+          SetProgress();
+          item.remove();
+          img.remove();
+          d.remove();
+          console.log(fileName + "txt not found");
+          continue;
+        }
 
         carry++;
         SetProgress();
