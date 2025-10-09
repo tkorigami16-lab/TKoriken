@@ -40,6 +40,7 @@ async function Awake() {
   };
 
   let black = document.getElementById("Black");
+  black.style.opacity = 1;
 
   //Set Awake Setting
   await fetch(basePath + "/data/Resources/Setting.json")
@@ -196,8 +197,11 @@ async function Awake() {
         await fetch(basePath + "/data/Products/" + fileName + ".json")
           .then((res) => res.json())
           .then((data) => {
+            let str = data.productName;
+            const names = str.split("_");
+
             let pro = document.createElement("p");
-            pro.textContent = "題 : " + data.productName;
+            pro.textContent = "題 : " + names[0];
             d.appendChild(pro);
 
             let inv = document.createElement("p");
