@@ -3,6 +3,20 @@ let windowSize = {
   height: window.innerHeight,
 };
 
+class ProductBox {
+  constructor(image, comment) {
+    this.img = image;
+    this.com = comment;
+    this.ReSetHeight();
+  }
+
+  ReSetHeight() {
+    this.com.style.maxHeight = `${this.img.height - 88}px`;
+  }
+}
+
+let prods = [];
+
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOMの読み込みが完了しました");
@@ -139,11 +153,17 @@ async function Awake() {
       console.log("Not Found : Setting.json");
     });
 
-  const target = document.getElementById("Black");
-  target.style.opacity = 0; // 徐々に透明に
+  let f = 0;
+  while (f < 0.08) {
+    black.style.opacity = (0.08 - f) / 0.08;
+    await delay(10);
+    f += 0.01;
+  }
+  black.style.opacity = 0;
   black.classList.add("hidden");
 
   //Load and Create Our Products
+  prods = [];
   await fetch(basePath + "/data/index.json")
     .then((res) => res.json())
     .then(async (fileList) => {
@@ -201,23 +221,43 @@ async function Awake() {
             const names = str.split("_");
 
             let pro = document.createElement("p");
-            pro.textContent = "題 : " + names[0];
+            pro.textContent = "■ " + names[0];
+            pro.style.fontSize = "32px";
             d.appendChild(pro);
 
             let inv = document.createElement("p");
             inv.textContent = "創作 : " + data.inventor;
-            inv.style.fontSize = "16px";
+            inv.style.fontSize = "20px";
             d.appendChild(inv);
 
             let manu = document.createElement("p");
             manu.textContent = "作成 : " + data.manufacturer;
-            manu.style.fontSize = "16px";
+            manu.style.fontSize = "20px";
             d.appendChild(manu);
 
             let paper = document.createElement("p");
             paper.textContent = "紙 : " + data.paper;
-            paper.style.fontSize = "14px";
+            paper.style.fontSize = "16px";
             d.appendChild(paper);
+
+            let com = document.createElement("div");
+            com.classList.add("comment");
+            let comtxt = document.createElement("p");
+            comtxt.classList.add("clamp-box");
+            com.textContent = data.comment;
+            com.appendChild(comtxt);
+            let bt = document.createElement("button");
+            bt.classList.add("toggle");
+            com.appendChild(bt);
+            bt.addEventListener("click", () => {
+              comtxt.classList.toggle("expanded");
+              bt.textContent = comtxt.classList.contains("expanded")
+                ? "↑"
+                : "...";
+            });
+
+            prods.push(new ProductBox(img, comtxt));
+            d.appendChild(com);
 
             txtOk = true;
           });
@@ -271,18 +311,17 @@ async function Awake() {
     if (window.innerWidth <= 1279) {
       mobileMenu.style.top = `${window.scrollY + 60}px`;
     }
+
+    prods.forEach((p) => {
+      p.ReSetHeight();
+    });
   });
 
-  /*
   window.addEventListener("resize", () => {
-    if (window.width <= 768 && windowSize > 768) {
-    } else if (window.window > 768 && windowSize <= 768) {
-    }
-
-    windowSize.width = window.innerWidth;
-    windowSize.height = windowSize.innerHeight;
+    prods.forEach((box) => {
+      box.ReSetHeight;
+    });
   });
-  */
 
   prog.style.width = "100%";
   prog.style.backgroundColor = "#44dc81";
