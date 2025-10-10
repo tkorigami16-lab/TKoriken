@@ -1,17 +1,39 @@
-let windowSize = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
-
 class ProductBox {
-  constructor(image, comment) {
+  constructor(image, box, parent, RL) {
     this.img = image;
-    this.com = comment;
+    this.con = box;
+    this.parent = parent;
+    this.RL = RL; //R:True,L:False
     this.ReSetHeight();
   }
 
   ReSetHeight() {
-    this.com.style.maxHeight = `${this.img.height - 88}px`;
+    let height = 0;
+    const para = this.con.querySelectorAll("p");
+    para.forEach((p) => {
+      height += p.height;
+    });
+
+    this.img.style.height = `${height}px`;
+  }
+
+  ReOrder(small) {
+    if (small) {
+      this.parent.style.display = "block";
+      this.parent.appendChild(img);
+      this.parent.appendChild(con);
+      this.img.style.width = "420px";
+    } else {
+      this.parent.style.display = "flex";
+      if (RL) {
+        this.parent.appendChild(con);
+        this.parent.appendChild(img);
+      } else {
+        this.parent.appendChild(img);
+        this.parent.appendChild(con);
+      }
+      this.ReSetHeight();
+    }
   }
 }
 
@@ -168,9 +190,117 @@ async function Awake() {
     .then((res) => res.json())
     .then(async (fileList) => {
       let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
-      maxTask += 2 * fileList.length;
+      console.log(fileList.index[0].productName);
+      maxTask += 2 * fileList.index.length;
 
-      let RLnum = 0;
+      console.log("OK");
+      return;
+
+      fileList.index.forEach(async (data) => {
+        let item = document.createElement("li"); //子オブジェクトを作成
+        let con = document.createElement("div");
+        con.style.display = "flex";
+
+        let img = document.createElement("img");
+        let d = document.createElement("div");
+        d.classList.add("captions");
+
+        let imgOk = false;
+        //Set Image
+        for (let i = 0; i < imgExt.length; i++) {
+          if (
+            (await checkFileExists(
+              basePath + "/data/Products/" + data.productName + imgExt[i]
+            )) == true
+          ) {
+            img.src =
+              basePath + "/data/Products/" + data.productName + imgExt[i];
+            img.alt = `(${imgExt[i]})`;
+            img.width = 200;
+            img.height = 200;
+            item.appendChild(img);
+            imgOk = true;
+            break;
+          }
+        }
+
+        if (!imgOk) {
+          carry += 2;
+          SetProgress();
+          item.remove();
+          img.remove();
+          d.remove();
+          console.log(data.productName + " img not found");
+          return;
+        }
+
+        carry++;
+        SetProgress();
+
+        let txtOk = false;
+        let str = data.productName;
+        const names = str.split("_");
+
+        let pro = document.createElement("p");
+        pro.textContent = "■ " + names[0];
+        pro.style.fontSize = "32px";
+        d.appendChild(pro);
+
+        let inv = document.createElement("p");
+        inv.textContent = "創作 : " + data.inventor;
+        inv.style.fontSize = "20px";
+        d.appendChild(inv);
+
+        let manu = document.createElement("p");
+        manu.textContent = "作成 : " + data.manufacturer;
+        manu.style.fontSize = "20px";
+        d.appendChild(manu);
+
+        let paper = document.createElement("p");
+        paper.textContent = "紙 : " + data.paper;
+        paper.style.fontSize = "16px";
+        d.appendChild(paper);
+
+        let comtxt = document.createElement("p");
+        comtxt.textContent = data.comment;
+        comtxt.style.fontSize = "16px";
+        d.appendChild(comtxt);
+
+        txtOk = true;
+
+        if (!txtOk) {
+          carry++;
+          SetProgress();
+          item.remove();
+          img.remove();
+          d.remove();
+          console.log(fileName + " txt not found");
+          return;
+        }
+
+        carry++;
+        SetProgress();
+
+        if (RLnum % 2 == 1) {
+          item.classList.add("left");
+          d.classList.add("right");
+          con.appendChild(img);
+          con.appendChild(d);
+          prods.push(new ProductBox(img, d, parent, false));
+        } else {
+          item.classList.add("right");
+          d.classList.add("left");
+          con.appendChild(d);
+          con.appendChild(img);
+          prods.push(new ProductBox(img, d, parent, true));
+        }
+        item.appendChild(con);
+
+        RLnum++;
+        imageList.appendChild(item);
+        console.log(fileName + " Created");
+      });
+      /*
       for (let num = 0; num < fileList.length; num++) {
         let item = document.createElement("li"); //子オブジェクトを作成
         let con = document.createElement("div");
@@ -240,24 +370,10 @@ async function Awake() {
             paper.style.fontSize = "16px";
             d.appendChild(paper);
 
-            let com = document.createElement("div");
-            com.classList.add("comment");
             let comtxt = document.createElement("p");
-            comtxt.classList.add("clamp-box");
-            com.textContent = data.comment;
-            com.appendChild(comtxt);
-            let bt = document.createElement("button");
-            bt.classList.add("toggle");
-            com.appendChild(bt);
-            bt.addEventListener("click", () => {
-              comtxt.classList.toggle("expanded");
-              bt.textContent = comtxt.classList.contains("expanded")
-                ? "↑"
-                : "...";
-            });
-
-            prods.push(new ProductBox(img, comtxt));
-            d.appendChild(com);
+            comtxt.textContent = data.comment;
+            comtxt.style.fontSize = "16px";
+            d.appendChild(comtxt);
 
             txtOk = true;
           });
@@ -281,11 +397,13 @@ async function Awake() {
           d.classList.add("right");
           con.appendChild(img);
           con.appendChild(d);
+          prods.push(new ProductBox(img, d, parent, false));
         } else {
           item.classList.add("right");
           d.classList.add("left");
           con.appendChild(d);
           con.appendChild(img);
+          prods.push(new ProductBox(img, d, parent, true));
         }
         item.appendChild(con);
 
@@ -293,6 +411,7 @@ async function Awake() {
         imageList.appendChild(item);
         console.log(fileName + " Created");
       }
+      */
     })
     .catch((err) => {
       console.error("Some Error Happened during Generating the Images", err);
@@ -311,15 +430,11 @@ async function Awake() {
     if (window.innerWidth <= 1279) {
       mobileMenu.style.top = `${window.scrollY + 60}px`;
     }
-
-    prods.forEach((p) => {
-      p.ReSetHeight();
-    });
   });
 
   window.addEventListener("resize", () => {
     prods.forEach((box) => {
-      box.ReSetHeight;
+      box.ReOrder(window.innerWidth > 1279);
     });
   });
 

@@ -254,12 +254,12 @@ ul.ilist {
 }
 
 ul.ilist li {
-  display: inline-block;
+  display: block;
   margin-bottom: 40px;
 }
 
 ul.ilist li.left {
-  display: flex;
+  display: block;
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
@@ -267,7 +267,7 @@ ul.ilist li.left {
 }
 
 ul.ilist li.right {
-  display: flex;
+  display: block;
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
