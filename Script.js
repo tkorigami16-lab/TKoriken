@@ -190,11 +190,8 @@ async function Awake() {
     .then((res) => res.json())
     .then(async (fileList) => {
       let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
-      console.log(fileList.index[0].productName);
       maxTask += 2 * fileList.index.length;
-
-      console.log("OK");
-      return;
+      let RLnum = 0;
 
       fileList.index.forEach(async (data) => {
         let item = document.createElement("li"); //子オブジェクトを作成
@@ -298,7 +295,7 @@ async function Awake() {
 
         RLnum++;
         imageList.appendChild(item);
-        console.log(fileName + " Created");
+        console.log(data.productName + " Created");
       });
       /*
       for (let num = 0; num < fileList.length; num++) {
