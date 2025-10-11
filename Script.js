@@ -202,26 +202,17 @@ async function Awake() {
         let d = document.createElement("div");
         d.classList.add("captions");
 
-        let imgOk = false;
-        //Set Image
-        for (let i = 0; i < imgExt.length; i++) {
-          if (
-            (await checkFileExists(
-              basePath + "/data/Products/" + data.productName + imgExt[i]
-            )) == true
-          ) {
-            img.src =
-              basePath + "/data/Products/" + data.productName + imgExt[i];
-            img.alt = `(${imgExt[i]})`;
-            img.width = 200;
-            img.height = 200;
-            item.appendChild(img);
-            imgOk = true;
-            break;
-          }
-        }
-
-        if (!imgOk) {
+        if (
+          (await checkFileExists(
+            basePath + "/data/WEBPimages/" + data.productName + ".webp"
+          )) == true
+        ) {
+          img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
+          img.alt = ".webp";
+          img.width = 200;
+          img.height = 200;
+          item.appendChild(img);
+        } else {
           carry += 2;
           SetProgress();
           item.remove();
@@ -234,7 +225,6 @@ async function Awake() {
         carry++;
         SetProgress();
 
-        let txtOk = false;
         let str = data.productName;
         const names = str.split("_");
 
@@ -263,18 +253,6 @@ async function Awake() {
         comtxt.style.fontSize = "16px";
         d.appendChild(comtxt);
 
-        txtOk = true;
-
-        if (!txtOk) {
-          carry++;
-          SetProgress();
-          item.remove();
-          img.remove();
-          d.remove();
-          console.log(fileName + " txt not found");
-          return;
-        }
-
         carry++;
         SetProgress();
 
@@ -297,118 +275,6 @@ async function Awake() {
         imageList.appendChild(item);
         console.log(data.productName + " Created");
       });
-      /*
-      for (let num = 0; num < fileList.length; num++) {
-        let item = document.createElement("li"); //子オブジェクトを作成
-        let con = document.createElement("div");
-        con.style.display = "flex";
-
-        let fileName = fileList[num];
-        let img = document.createElement("img");
-        let d = document.createElement("div");
-        d.classList.add("captions");
-
-        let imgOk = false;
-        //Set Image
-        for (let i = 0; i < imgExt.length; i++) {
-          if (
-            (await checkFileExists(
-              basePath + "/data/Products/" + fileName + imgExt[i]
-            )) == true
-          ) {
-            img.src = basePath + "/data/Products/" + fileName + imgExt[i];
-            img.alt = `(${imgExt[i]})`;
-            img.width = 200;
-            img.height = 200;
-            item.appendChild(img);
-            imgOk = true;
-            break;
-          }
-        }
-
-        if (!imgOk) {
-          carry += 2;
-          SetProgress();
-          item.remove();
-          img.remove();
-          d.remove();
-          console.log(fileName + " img not found");
-          continue;
-        }
-
-        carry++;
-        SetProgress();
-
-        let txtOk = false;
-        //#region : Set Texts
-        await fetch(basePath + "/data/Products/" + fileName + ".json")
-          .then((res) => res.json())
-          .then((data) => {
-            let str = data.productName;
-            const names = str.split("_");
-
-            let pro = document.createElement("p");
-            pro.textContent = "■ " + names[0];
-            pro.style.fontSize = "32px";
-            d.appendChild(pro);
-
-            let inv = document.createElement("p");
-            inv.textContent = "創作 : " + data.inventor;
-            inv.style.fontSize = "20px";
-            d.appendChild(inv);
-
-            let manu = document.createElement("p");
-            manu.textContent = "作成 : " + data.manufacturer;
-            manu.style.fontSize = "20px";
-            d.appendChild(manu);
-
-            let paper = document.createElement("p");
-            paper.textContent = "紙 : " + data.paper;
-            paper.style.fontSize = "16px";
-            d.appendChild(paper);
-
-            let comtxt = document.createElement("p");
-            comtxt.textContent = data.comment;
-            comtxt.style.fontSize = "16px";
-            d.appendChild(comtxt);
-
-            txtOk = true;
-          });
-        //#endregion
-
-        if (!txtOk) {
-          carry++;
-          SetProgress();
-          item.remove();
-          img.remove();
-          d.remove();
-          console.log(fileName + " txt not found");
-          continue;
-        }
-
-        carry++;
-        SetProgress();
-
-        if (RLnum % 2 == 1) {
-          item.classList.add("left");
-          d.classList.add("right");
-          con.appendChild(img);
-          con.appendChild(d);
-          prods.push(new ProductBox(img, d, parent, false));
-        } else {
-          item.classList.add("right");
-          d.classList.add("left");
-          con.appendChild(d);
-          con.appendChild(img);
-          prods.push(new ProductBox(img, d, parent, true));
-        }
-        item.appendChild(con);
-
-        RLnum++;
-        imageList.appendChild(item);
-        console.log(fileName + " Created");
-      }
-      */
     })
     .catch((err) => {
       console.error("Some Error Happened during Generating the Images", err);
@@ -466,7 +332,7 @@ async function Awake() {
 
 async function checkFileExists(url) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { method: "HEAD" });
 
     if (response.ok) {
       console.log("OK file exist :" + url);
