@@ -15,6 +15,8 @@ jobs:
       # ① リポジトリを取得
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHPAT }}
 
       # ② Node.js をセットアップ
       - name: Setup Node.js
