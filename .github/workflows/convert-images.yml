@@ -56,5 +56,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git add data/WEBPimages
+          git commit -m "Auto convert images to WebP" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GHPAT }}@github.com/tkorigami16-lab/TKoriken.git
           git push origin main
