@@ -1,46 +1,61 @@
-name: Convert Images Automatically
+name: Convert Images to WebP
 
 on:
   push:
     branches:
-      - main # mainブランチにpushされたとき実行
+      - main
     paths:
-      - "data/Products/**" # images/フォルダ内に変更があったときだけ
+      - "data/Products/**" # Products フォルダ内に変更があったら実行
 
 jobs:
-  build:
+  convert:
     runs-on: ubuntu-latest
 
     steps:
+      # ① リポジトリを取得
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ② Node.js をセットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      # ③ sharp をインストール
+      - name: Install sharp
         run: |
           npm init -y
           npm install sharp
 
-      - name: Convert images
+      # ④ WebP 変換を実行
+      - name: Convert to WebP
         run: |
-          mkdir -p data/Products/**
+          mkdir -p data/WEBPimages
           node -e "
-          import fs from 'fs'; import sharp from 'sharp';
-          const files = fs.readdirSync('images');
-          fs.mkdirSync('data/Products', {recursive:true});
-          for (const f of files) {
-            const name = f.split('.')[0];
-            sharp('images/'+f).webp({quality:80}).toFile('data/Products/'+name+'.webp');
+          import fs from 'fs';
+          import path from 'path';
+          import sharp from 'sharp';
+          const inputDir = 'data/Products';
+          const outputDir = 'data/WEBPimages';
+          fs.mkdirSync(outputDir, { recursive: true });
+          const files = fs.readdirSync(inputDir);
+          for (const file of files) {
+            const ext = path.extname(file).toLowerCase();
+            if (!['.jpg', '.jpeg', '.png'].includes(ext)) continue;
+            const base = path.parse(file).name;
+            sharp(path.join(inputDir, file))
+              .webp({ quality: 80 })
+              .toFile(path.join(outputDir, base + '.webp'))
+              .then(() => console.log('✅ Converted:', file))
+              .catch(err => console.error('❌ Error:', err));
           }"
 
-      - name: Commit and push results
+      # ⑤ 結果をコミット & push
+      - name: Commit and push converted images
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
-          git add dist/images -f
-          git commit -m 'Auto convert images' || echo 'No changes'
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add data/WEBPimages -f
+          git commit -m "Auto convert images to WebP" || echo "No changes"
           git push
