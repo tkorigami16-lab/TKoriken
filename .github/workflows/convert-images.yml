@@ -3,9 +3,9 @@ name: Convert Images Automatically
 on:
   push:
     branches:
-      - main        # mainブランチにpushされたとき実行
+      - main # mainブランチにpushされたとき実行
     paths:
-      - 'data/Products/**' # images/フォルダ内に変更があったときだけ
+      - "data/Products/**" # images/フォルダ内に変更があったときだけ
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: |
@@ -27,14 +27,14 @@ jobs:
 
       - name: Convert images
         run: |
-          mkdir -p dist/images
+          mkdir -p data/Products/**
           node -e "
           import fs from 'fs'; import sharp from 'sharp';
           const files = fs.readdirSync('images');
-          fs.mkdirSync('dist/images', {recursive:true});
+          fs.mkdirSync('data/Products', {recursive:true});
           for (const f of files) {
             const name = f.split('.')[0];
-            sharp('images/'+f).webp({quality:80}).toFile('dist/images/'+name+'.webp');
+            sharp('images/'+f).webp({quality:80}).toFile('data/Products/'+name+'.webp');
           }"
 
       - name: Commit and push results
