@@ -47,13 +47,19 @@ p {
   display: block;
 }
 
+#BackGroundImage {
+  position: fixed;
+  width: 1vh;
+  height: auto;
+  z-index: 100;
+}
+
 .loading {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #012157;
   z-index: 200;
   display: flex;
   justify-content: center;
@@ -101,8 +107,13 @@ body {
   padding: 20px;
   padding-left: 220px;
   background-color: #5a5a5a;
+  background-image: none;
   border: 1px solid #ddd;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container.hidden {
+  display: none;
 }
 
 #overlay {
@@ -347,6 +358,7 @@ ul.ilist.right img {
     padding: 20px;
     text-align: center;
     background-color: #261d32;
+    background-image: none;
     border: 0px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -411,6 +423,7 @@ ul.ilist.right img {
     margin: 0px auto;
     padding: 20px;
     background-color: #261d32;
+    background-image: none;
     border: 0px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }

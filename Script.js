@@ -58,25 +58,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function Awake() {
-  /*
-  let count = 0;
-  for (let i = 0; i < 60; i++) {
-    let sum = 32 * (2 * i + 1);
-
-    for (let n = sum; n > sum / 2; n--) {
-      let m = sum - n;
-
-      if (n > 1000) continue;
-      if (m > 1000) continue;
-      if (m % 64 != 0) {
-        count++;
-      }
-    }
-  }
-
-  console.log(count);
-  */
-
   const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
 
   document.documentElement.classList.add("no-scroll");
@@ -89,6 +70,10 @@ async function Awake() {
   //Set Title Panel
   let loading = document.getElementById("loadPanel");
   loading.classList.remove("hide");
+
+  //Set Container
+  let container = document.getElementById("cont");
+  container.classList.add("hidden");
 
   //Set Wrap
   let wrap = document.getElementById("wrap");
@@ -115,10 +100,11 @@ async function Awake() {
     const set = json.special;
     let mobilemenuBox = document.getElementById("mobileMenuList");
     let desktopmenubox = document.getElementById("desktopMenuList");
-    maxTask += 2 * set.MenuItems.length;
+    maxTask += 2 * set.length;
 
     //Body
     let BGI = document.getElementById("BackGroundImage");
+    let TB = document.getElementById("TitleBack");
     let s =
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
 
@@ -127,8 +113,7 @@ async function Awake() {
         basePath + "/data/WEBPimages/BackGroundImage.webp"
       )) == true
     ) {
-      BGI.style.backgroundImage = s;
-      loading.style.backgroundImage = s;
+      BGI.src = s;
       console.log("BackGround SetUp Complete");
     } else {
       console.log("Failed to load BackGroundImage");
@@ -170,7 +155,13 @@ async function Awake() {
     let cont = document.getElementById("cont");
     s =
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
-    cont.backgroundImage = s;
+    if (
+      await checkFileExists(basePath + "/data/WEBPimages/BackGroundImage.webp")
+    ) {
+      cont.style.backgroundImage = s;
+    } else {
+      console.log("Failed to load BackGround");
+    }
   } catch {}
 
   black.classList.add("hidden");
@@ -297,9 +288,9 @@ async function Awake() {
   prog.style.backgroundColor = "#44dc81";
   span.textContent = "Complete Loading";
 
-  await delay(800);
   wrap.style.display = "None";
   loading.style.opacity = 0;
+  container.classList.remove("hidden");
   await delay(1000);
 
   //Make Overlay
