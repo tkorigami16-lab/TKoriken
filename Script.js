@@ -20,17 +20,29 @@ class ProductBox {
   ReOrder(small) {
     if (small) {
       this.parent.style.display = "block";
-      this.parent.appendChild(img);
-      this.parent.appendChild(con);
+      this.parent.appendChild(this.img);
+      this.parent.appendChild(this.con);
       this.img.style.width = "420px";
+      this.img.classList.remove("right");
+      this.con.classList.remove("left");
+      this.img.classList.add("left");
+      this.con.classList.add("right");
     } else {
       this.parent.style.display = "flex";
-      if (RL) {
-        this.parent.appendChild(con);
-        this.parent.appendChild(img);
+      if (this.RL) {
+        this.img.classList.remove("left");
+        this.con.classList.remove("right");
+        this.parent.appendChild(this.con);
+        this.parent.appendChild(this.img);
+        this.img.classList.add("right");
+        this.con.classList.add("left");
       } else {
-        this.parent.appendChild(img);
-        this.parent.appendChild(con);
+        this.img.classList.remove("right");
+        this.con.classList.remove("left");
+        this.parent.appendChild(this.img);
+        this.parent.appendChild(this.con);
+        this.img.classList.add("left");
+        this.con.classList.add("right");
       }
       this.ReSetHeight();
     }
@@ -202,12 +214,14 @@ async function Awake() {
         let d = document.createElement("div");
         d.classList.add("captions");
 
+        let s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${data.productName}.webp`;
         if (
           (await checkFileExists(
             basePath + "/data/WEBPimages/" + data.productName + ".webp"
           )) == true
         ) {
-          img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
+          img.src = s;
+          //img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
           img.alt = ".webp";
           img.width = 200;
           img.height = 200;
@@ -261,13 +275,13 @@ async function Awake() {
           d.classList.add("right");
           con.appendChild(img);
           con.appendChild(d);
-          prods.push(new ProductBox(img, d, parent, false));
+          prods.push(new ProductBox(img, d, item, false));
         } else {
           item.classList.add("right");
           d.classList.add("left");
           con.appendChild(d);
           con.appendChild(img);
-          prods.push(new ProductBox(img, d, parent, true));
+          prods.push(new ProductBox(img, d, item, true));
         }
         item.appendChild(con);
 
@@ -297,8 +311,12 @@ async function Awake() {
 
   window.addEventListener("resize", () => {
     prods.forEach((box) => {
-      box.ReOrder(window.innerWidth > 1279);
+      box.ReOrder(window.innerWidth < 1279);
     });
+  });
+
+  prods.forEach((box) => {
+    box.ReOrder(window.innerWidth < 1279);
   });
 
   prog.style.width = "100%";

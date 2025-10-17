@@ -263,7 +263,7 @@ ul.ilist li.left {
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 ul.ilist li.right {
@@ -271,7 +271,7 @@ ul.ilist li.right {
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 ul.ilist img {
