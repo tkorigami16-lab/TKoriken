@@ -90,6 +90,7 @@ async function Awake() {
   let black = document.getElementById("Black");
   black.style.opacity = 1;
 
+  /*
   //Set Awake Setting
   await fetch(basePath + "/data/Resources/Setting.json")
     .then((res) => res.json())
@@ -166,7 +167,6 @@ async function Awake() {
         }
       }
 
-      /*
       //Back
       let titlebackImage = document.getElementById("TitleBack");
       for (let i = 0; i < imgExt.length; i++) {
@@ -181,21 +181,69 @@ async function Awake() {
           break;
         }
       }
-      */
     })
     .catch((err) => {
       console.log("Not Found : Setting.json");
     });
+  */
 
-  let f = 0;
-  while (f < 0.08) {
-    black.style.opacity = (0.08 - f) / 0.08;
-    await delay(10);
-    f += 0.01;
-  }
-  black.style.opacity = 0;
+  try {
+    const res = await fetch(basePath + "data/Setting.json");
+    const set = await res.json();
+    let mobilemenuBox = document.getElementById("mobileMenuList");
+    let desktopmenubox = document.getElementById("desktopMenuList");
+    maxTask += 2 * set.MenuItems.length;
+
+    //Body
+    let BGI = document.getElementById("BackGroundImage");
+    let s =
+      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
+
+    if (
+      (await checkFileExists(
+        basePath + "/data/WEBPimages/BackGroundImage.webp"
+      )) == true
+    ) {
+      BGI.style.backgroundImage = s;
+      loading.style.backgroundImage = s;
+      console.log("body SetUp Complete");
+    }
+
+    //Menu
+    for (let i = 0; i < set.MenuItems.length; i++) {
+      let mm = document.createElement("li");
+      let link = document.createElement("a");
+      link.textContent = set.MenuItems[i].buttonName;
+      link.href = set.MenuItems[i].url;
+      mm.appendChild(link);
+      mobilemenuBox.appendChild(mm);
+      carry++;
+      SetProgress();
+
+      let clone = mm.cloneNode(true);
+      desktopmenubox.append(clone);
+      carry++;
+      SetProgress();
+    }
+    console.log("Menu SetUp Complete");
+
+    //Title
+    let titleImage = document.getElementById("TitleImage");
+
+    s =
+      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/Title.webp";
+
+    if (
+      (await checkFileExists(basePath + "/data/WEBPimages/Title.webp")) == true
+    ) {
+      titleImage.src = s;
+      console.log("Title SetUp Complete");
+    }
+  } catch {}
+
   black.classList.add("hidden");
 
+  /*
   //Load and Create Our Products
   prods = [];
   await fetch(basePath + "/data/index.json")
@@ -294,6 +342,101 @@ async function Awake() {
       console.error("Some Error Happened during Generating the Images", err);
       return;
     });
+  */
+
+  try {
+    const res = await fetch(basePath + "/data/index.json");
+    const fileList = await res.json();
+    let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
+    maxTask += 2 * fileList.index.length;
+    let RLnum = 0;
+
+    for (const data of fileList.index) {
+      let item = document.createElement("li"); //子オブジェクトを作成
+      let con = document.createElement("div");
+      con.style.display = "flex";
+
+      let img = document.createElement("img");
+      let d = document.createElement("div");
+      d.classList.add("captions");
+
+      let s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${data.productName}.webp`;
+      if (
+        (await checkFileExists(
+          basePath + "/data/WEBPimages/" + data.productName + ".webp"
+        )) == true
+      ) {
+        img.src = s;
+        //img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
+        img.alt = ".webp";
+        img.width = 200;
+        img.height = 200;
+        item.appendChild(img);
+      } else {
+        carry += 2;
+        SetProgress();
+        item.remove();
+        img.remove();
+        d.remove();
+        console.log(data.productName + " img not found");
+        return;
+      }
+
+      carry++;
+      SetProgress();
+
+      let str = data.productName;
+      const names = str.split("_");
+
+      let pro = document.createElement("p");
+      pro.textContent = "■ " + names[0];
+      pro.style.fontSize = "32px";
+      d.appendChild(pro);
+
+      let inv = document.createElement("p");
+      inv.textContent = "創作 : " + data.inventor;
+      inv.style.fontSize = "20px";
+      d.appendChild(inv);
+
+      let manu = document.createElement("p");
+      manu.textContent = "作成 : " + data.manufacturer;
+      manu.style.fontSize = "20px";
+      d.appendChild(manu);
+
+      let paper = document.createElement("p");
+      paper.textContent = "紙 : " + data.paper;
+      paper.style.fontSize = "16px";
+      d.appendChild(paper);
+
+      let comtxt = document.createElement("p");
+      comtxt.textContent = data.comment;
+      comtxt.style.fontSize = "16px";
+      d.appendChild(comtxt);
+
+      carry++;
+      SetProgress();
+
+      if (RLnum % 2 == 1) {
+        item.classList.add("left");
+        d.classList.add("right");
+        con.appendChild(img);
+        con.appendChild(d);
+        prods.push(new ProductBox(img, d, item, false));
+      } else {
+        item.classList.add("right");
+        d.classList.add("left");
+        con.appendChild(d);
+        con.appendChild(img);
+        prods.push(new ProductBox(img, d, item, true));
+      }
+      item.appendChild(con);
+
+      RLnum++;
+      imageList.appendChild(item);
+      console.log(data.productName + " Created");
+    }
+  } catch {}
+  console.log("Create All Items");
 
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
