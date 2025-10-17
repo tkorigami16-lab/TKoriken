@@ -110,7 +110,7 @@ async function Awake() {
 
   //Title,MenuBox
   try {
-    const res = await fetch(basePath + "/data/specialIndex.json");
+    const res = await fetch(basePath + "/data/SpecialIndex.json");
     const json = await res.json();
     const set = json.special;
     let mobilemenuBox = document.getElementById("mobileMenuList");
