@@ -58,8 +58,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function Awake() {
+  /*
+  let count = 0;
+  for (let i = 0; i < 60; i++) {
+    let sum = 32 * (2 * i + 1);
+
+    for (let n = sum; n > sum / 2; n--) {
+      let m = sum - n;
+
+      if (n > 1000) continue;
+      if (m > 1000) continue;
+      if (m % 64 != 0) {
+        count++;
+      }
+    }
+  }
+
+  console.log(count);
+  */
+
   const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-  const imgExt = [".HEIC", ".png", ".jpg", ".JPG", ".jpeg", ".gif", ".svg"]; //画像の拡張子をセット（場合によっては追加して良い）
 
   document.documentElement.classList.add("no-scroll");
   document.body.classList.add("no-scroll");
@@ -90,106 +108,11 @@ async function Awake() {
   let black = document.getElementById("Black");
   black.style.opacity = 1;
 
-  /*
-  //Set Awake Setting
-  await fetch(basePath + "/data/Resources/Setting.json")
-    .then((res) => res.json())
-    .then(async (set) => {
-      let mobilemenuBox = document.getElementById("mobileMenuList");
-      let desktopmenubox = document.getElementById("desktopMenuList");
-      maxTask += 2 * set.MenuItems.length;
-
-      //Body
-      let BGI = document.getElementById("BackGroundImage");
-      for (let i = 0; i < imgExt.length; i++) {
-        if (
-          (await checkFileExists(
-            basePath + "/data/Resources/backgroundImage" + imgExt[i]
-          )) == true
-        ) {
-          let str = `url(${basePath}/data/Resources/backgroundImage${imgExt[i]})`;
-
-          if (i == 0) {
-            try {
-              const convertedBlob = await heic2any({
-                blob: str,
-                toType: "image/jpeg",
-                quality: 0.9, // 0〜1で画質調整
-              });
-
-              const imgURL = URL.createObjectURL(convertedBlob);
-              BGI.style.backgroundImage = imgURL;
-              loading.style.backgroundImage = imgURL;
-              console.log("body SetUp Complete");
-              break;
-            } catch (error) {
-              console.error("変換エラー:", error);
-              alert("変換に失敗しました");
-            }
-          }
-
-          BGI.style.backgroundImage = str;
-          loading.style.backgroundImage = str;
-          console.log("body SetUp Complete");
-          break;
-        }
-      }
-
-      //Menu
-      for (let i = 0; i < set.MenuItems.length; i++) {
-        let mm = document.createElement("li");
-        let link = document.createElement("a");
-        link.textContent = set.MenuItems[i].buttonName;
-        link.href = set.MenuItems[i].url;
-        mm.appendChild(link);
-        mobilemenuBox.appendChild(mm);
-        carry++;
-        SetProgress();
-
-        let clone = mm.cloneNode(true);
-        desktopmenubox.append(clone);
-        carry++;
-        SetProgress();
-      }
-      console.log("Menu SetUp Complete");
-
-      //Title
-      let titleImage = document.getElementById("TitleImage");
-      for (let i = 0; i < imgExt.length; i++) {
-        if (
-          (await checkFileExists(
-            basePath + "/data/Resources/title" + imgExt[i]
-          )) == true
-        ) {
-          titleImage.src = basePath + "/data/Resources/title" + imgExt[i];
-          console.log("Title SetUp Complete");
-          break;
-        }
-      }
-
-      //Back
-      let titlebackImage = document.getElementById("TitleBack");
-      for (let i = 0; i < imgExt.length; i++) {
-        if (
-          (await checkFileExists(
-            basePath + "/data/Resources/titleback" + imgExt[i]
-          )) == true
-        ) {
-          titlebackImage.src =
-            basePath + "/data/Resources/titleback" + imgExt[i];
-          console.log("Title SetUp Complete");
-          break;
-        }
-      }
-    })
-    .catch((err) => {
-      console.log("Not Found : Setting.json");
-    });
-  */
-
+  //Title,MenuBox
   try {
-    const res = await fetch(basePath + "data/Setting.json");
-    const set = await res.json();
+    const res = await fetch(basePath + "/data/specialIndex.json");
+    const json = await res.json();
+    const set = json.special;
     let mobilemenuBox = document.getElementById("mobileMenuList");
     let desktopmenubox = document.getElementById("desktopMenuList");
     maxTask += 2 * set.MenuItems.length;
@@ -206,15 +129,17 @@ async function Awake() {
     ) {
       BGI.style.backgroundImage = s;
       loading.style.backgroundImage = s;
-      console.log("body SetUp Complete");
+      console.log("BackGround SetUp Complete");
+    } else {
+      console.log("Failed to load BackGroundImage");
     }
 
     //Menu
-    for (let i = 0; i < set.MenuItems.length; i++) {
+    for (let i = 0; i < set.length; i++) {
       let mm = document.createElement("li");
       let link = document.createElement("a");
-      link.textContent = set.MenuItems[i].buttonName;
-      link.href = set.MenuItems[i].url;
+      link.textContent = set[i].buttonName;
+      link.href = set[i].url;
       mm.appendChild(link);
       mobilemenuBox.appendChild(mm);
       carry++;
@@ -238,7 +163,14 @@ async function Awake() {
     ) {
       titleImage.src = s;
       console.log("Title SetUp Complete");
+    } else {
+      console.log("Fail to load titleImage");
     }
+
+    let cont = document.getElementById("cont");
+    s =
+      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
+    cont.backgroundImage = s;
   } catch {}
 
   black.classList.add("hidden");
@@ -469,19 +401,7 @@ async function Awake() {
   await delay(800);
   wrap.style.display = "None";
   loading.style.opacity = 0;
-  const cont = document.getElementById("cont");
-  for (let i = 0; i < imgExt.length; i++) {
-    if (
-      (await checkFileExists(basePath + "/data/Resources/title" + imgExt[i])) ==
-      true
-    ) {
-      cont.style.backgroundImage =
-        basePath + "/data/Resources/title" + imgExt[i];
-      console.log("container SetUp Complete");
-      break;
-    }
-  }
-  await delay(2000);
+  await delay(1000);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
