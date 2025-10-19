@@ -363,7 +363,8 @@ async function CreateSpecialContents(str) {
       imageList.innerHTML = "";
 
       let CtitleImg = document.getElementById("ContentTitle_Image");
-      CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${str}_TitleImg.webp`;
+      if (await (basePath + `/data/WEBPimages/${str}_TitleImg.webp`))
+        CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${str}_TitleImg.webp`;
       let parent = document.getElementById("SpecialContent");
       parent.innerHTML = "";
 
@@ -379,9 +380,7 @@ async function CreateSpecialContents(str) {
         for (let n = 0; n < data.imgNum; n++) {
           let image = document.createElement("img");
           if (
-            await checkFileExists(
-              basePath + `/data/WEMPImages/S_${str}_${imgNum}.webp`
-            )
+            await checkFileExists(basePath + `/data/WEBPImages/S_Test_0.webp`)
           ) {
             image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_Test_0.webp`;
             imgNum++;
