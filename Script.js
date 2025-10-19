@@ -51,6 +51,9 @@ class ProductBox {
 
 let prods = [];
 
+let chachIndex = null;
+let chachSpecial = null;
+
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOMの読み込みが完了しました");
@@ -95,16 +98,20 @@ async function Awake() {
 
   //Title,MenuBox
   try {
-    const res = await fetch(basePath + "/data/SpecialIndex.json");
-    const json = await res.json();
-    const set = json.special;
+    if (chachSpecial == null) {
+      const res = await fetch(
+        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/SpecialIndex.json"
+      );
+      const json = await res.json();
+      chachSpecial = json;
+    }
+    const set = chachSpecial.special;
     let mobilemenuBox = document.getElementById("mobileMenuList");
     let desktopmenubox = document.getElementById("desktopMenuList");
     maxTask += 2 * set.length;
 
     //Body
     let BGI = document.getElementById("BackGroundImage");
-    let TB = document.getElementById("TitleBack");
     let s =
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
 
@@ -120,11 +127,21 @@ async function Awake() {
     }
 
     //Menu
+    let menuIcon = document.getElementById("menuIcon");
+    s =
+      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/MenuBox.webp";
+    if (await checkFileExists(basePath + "/data/WEBPimages/MenuBox.webp")) {
+      menuIcon.src = s;
+      console.log("menuIcon ok");
+    } else {
+      console.log("Fail to load menuIcon");
+    }
+
     for (let i = 0; i < set.length; i++) {
       let mm = document.createElement("li");
       let link = document.createElement("a");
-      link.textContent = set[i].buttonName;
-      link.href = set[i].url;
+      link.textContent = set[i].title;
+      link.href = set[i].title;
       mm.appendChild(link);
       mobilemenuBox.appendChild(mm);
       carry++;
@@ -143,9 +160,7 @@ async function Awake() {
     s =
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/Title.webp";
 
-    if (
-      (await checkFileExists(basePath + "/data/WEBPimages/Title.webp")) == true
-    ) {
+    if (await checkFileExists(basePath + "/data/WEBPimages/Title.webp")) {
       titleImage.src = s;
       console.log("Title SetUp Complete");
     } else {
@@ -162,13 +177,21 @@ async function Awake() {
     } else {
       console.log("Failed to load BackGround");
     }
-  } catch {}
+  } catch {
+    console.log("some Error happened");
+  }
 
   black.classList.add("hidden");
 
   try {
-    const res = await fetch(basePath + "/data/index.json");
-    const fileList = await res.json();
+    if (chachIndex == null) {
+      const res = await fetch(
+        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/index.json"
+      );
+      chachIndex = await res.json();
+    }
+
+    const fileList = chachIndex;
     let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
     maxTask += 2 * fileList.index.length;
     let RLnum = 0;
@@ -290,8 +313,10 @@ async function Awake() {
 
   wrap.style.display = "None";
   loading.style.opacity = 0;
+  await delay(200);
+
   container.classList.remove("hidden");
-  await delay(1000);
+  await delay(800);
 
   //Make Overlay
   document.documentElement.classList.remove("no-scroll");
@@ -299,6 +324,26 @@ async function Awake() {
   over.classList.add("hidden");
   wrap.classList.add("hidden");
   loading.classList.add("hidden");
+}
+
+async function CreateSpecialContents(str) {
+  if (chachSpecial == null) {
+    const res = await fetch(
+      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/SpecialIndex.json"
+    );
+    const json = await res.json();
+    chachSpecial = json;
+  }
+
+  const spe = chachSpecial.special;
+  for (let i = 0; i < spe.length; i++) {
+    if (spe[i].title == str) {
+      let CtitleImg = document.getElementById("ContentTitle_Image");
+      CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_TitleImg`;
+
+      for (let i = 0; i < spe[i].text.length; i++) {}
+    }
+  }
 }
 
 async function checkFileExists(url) {

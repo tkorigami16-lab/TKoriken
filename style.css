@@ -54,6 +54,11 @@ p {
   z-index: 100;
 }
 
+#menuIcon {
+  width: 100%;
+  height: auto;
+}
+
 .loading {
   position: fixed;
   top: 0;
@@ -165,6 +170,11 @@ body {
   width: auto;
 }
 
+#ContentTitle_Image {
+  width: 100%;
+  height: auto;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -251,8 +261,6 @@ header {
   position: absolute;
   display: none;
   width: 200px;
-  padding: 1rem;
-  background: #eee;
   height: 100%;
 }
 
@@ -351,7 +359,7 @@ ul.ilist.right img {
 }
 
 /* スマホ表示 */
-@media (max-width: 1280px) {
+@media (max-width: 280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;
@@ -417,7 +425,7 @@ ul.ilist.right img {
 }
 
 /* PC表示 */
-@media (min-width: 1280px) {
+@media (min-width: 280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;
@@ -429,13 +437,12 @@ ul.ilist.right img {
   }
 
   .desktop-menu {
-    align-items: center;
-    text-align: center;
+    text-align: left;
     display: flex;
     position: fixed;
-    padding: 1rem;
+    padding: 0px;
     margin-left: -270px;
-    background-color: #f8ffd3;
+    background-color: #000000;
     border: 0px solid #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: fit-content;
