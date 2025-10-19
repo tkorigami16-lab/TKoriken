@@ -352,6 +352,7 @@ async function CreateSpecialContents(str) {
   }
 
   console.log("AAA");
+  const basePath = "https://tkorigami16-lab.github.io/TKoriken";
 
   const spe = chachSpecial.special;
   for (let i = 0; i < spe.length; i++) {
@@ -377,9 +378,19 @@ async function CreateSpecialContents(str) {
 
         for (let n = 0; n < data.imgNum; n++) {
           let image = document.createElement("img");
-          image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_${imgNum}.webp`;
-          imgNum++;
-          block.appendChild(image);
+          if (
+            await checkFileExists(
+              basePath + `/data/WEMPImages/S_${str}_${imgNum}.webp`
+            )
+          ) {
+            image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_Test_0.webp`;
+            imgNum++;
+            block.appendChild(image);
+          } else {
+            console.log(
+              "NG : " + basePath + `/data/WEMPImages/S_${str}_${imgNum}`
+            );
+          }
         }
         parent.appendChild(block);
       }
