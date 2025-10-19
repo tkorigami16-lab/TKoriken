@@ -385,7 +385,7 @@ ul.ilist.right img {
 }
 
 /* スマホ表示 */
-@media (max-width: 280px) {
+@media (max-width: 1280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;
@@ -451,7 +451,7 @@ ul.ilist.right img {
 }
 
 /* PC表示 */
-@media (min-width: 280px) {
+@media (min-width: 1280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;

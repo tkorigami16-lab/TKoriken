@@ -380,14 +380,18 @@ async function CreateSpecialContents(str) {
         for (let n = 0; n < data.imgNum; n++) {
           let image = document.createElement("img");
           if (
-            await checkFileExists(basePath + `/data/WEBPImages/S_Test_0.webp`)
+            await checkFileExists(
+              basePath + `/data/WEBPimages/S_${str}_${imgNum}.webp`
+            )
           ) {
-            image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_Test_0.webp`;
+            image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/S_${str}_${imgNum}.webp`;
+            image.style.width = "100%";
+            image.style.height = "auto";
             imgNum++;
             block.appendChild(image);
           } else {
             console.log(
-              "NG : " + basePath + `/data/WEMPImages/S_${str}_${imgNum}`
+              "NG : " + basePath + `/data/WEMPimages/S_${str}_${imgNum}`
             );
           }
         }
