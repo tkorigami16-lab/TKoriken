@@ -356,12 +356,13 @@ async function CreateSpecialContents(str) {
   const spe = chachSpecial.special;
   for (let i = 0; i < spe.length; i++) {
     if (spe[i].title == str) {
+      console.log(str);
+
       let imageList = document.getElementById("image-list");
       imageList.innerHTML = "";
 
       let CtitleImg = document.getElementById("ContentTitle_Image");
-      CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_TitleImg`;
-
+      CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${str}_TitleImg.webp`;
       let parent = document.getElementById("SpecialContent");
       parent.innerHTML = "";
 
@@ -376,8 +377,7 @@ async function CreateSpecialContents(str) {
 
         for (let n = 0; n < data.imgNum; n++) {
           let image = document.createElement("img");
-          const s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_${imgNum}`;
-          image.src = s;
+          image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_${imgNum}.webp`;
           imgNum++;
           block.appendChild(image);
         }
