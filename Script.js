@@ -53,6 +53,7 @@ let prods = [];
 
 let chachIndex = null;
 let chachSpecial = null;
+let loadOk = false;
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function Awake() {
+  loadOk = true;
   const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
 
   document.documentElement.classList.add("no-scroll");
@@ -138,16 +140,28 @@ async function Awake() {
     }
 
     for (let i = 0; i < set.length; i++) {
-      let mm = document.createElement("li");
-      let link = document.createElement("a");
-      link.textContent = set[i].title;
-      link.href = set[i].title;
-      mm.appendChild(link);
-      mobilemenuBox.appendChild(mm);
+      let child = document.createElement("li");
+      let b = document.createElement("button");
+      b.type = "button";
+      b.addEventListener("click", () => {
+        console.log("ok");
+        CreateSpecialContents(set[i].title);
+      });
+      b.classList.add("luxury-button");
+      b.textContent = set[i].title;
+
+      child.appendChild(b);
+      mobilemenuBox.appendChild(child);
       carry++;
       SetProgress();
 
-      let clone = mm.cloneNode(true);
+      let clone = child.cloneNode(true);
+      let clonedButton = clone.querySelector("button");
+      clonedButton.addEventListener("click", () => {
+        console.log("ok");
+        CreateSpecialContents(set[i].title);
+      });
+      desktopmenubox.append(clone);
       desktopmenubox.append(clone);
       carry++;
       SetProgress();
@@ -324,9 +338,11 @@ async function Awake() {
   over.classList.add("hidden");
   wrap.classList.add("hidden");
   loading.classList.add("hidden");
+  loadOk = false;
 }
 
 async function CreateSpecialContents(str) {
+  if (loadOk) return;
   if (chachSpecial == null) {
     const res = await fetch(
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/SpecialIndex.json"
@@ -335,15 +351,43 @@ async function CreateSpecialContents(str) {
     chachSpecial = json;
   }
 
+  console.log("AAA");
+
   const spe = chachSpecial.special;
   for (let i = 0; i < spe.length; i++) {
     if (spe[i].title == str) {
+      let imageList = document.getElementById("image-list");
+      imageList.innerHTML = "";
+
       let CtitleImg = document.getElementById("ContentTitle_Image");
       CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_TitleImg`;
 
-      for (let i = 0; i < spe[i].text.length; i++) {}
+      let parent = document.getElementById("SpecialContent");
+      parent.innerHTML = "";
+
+      let imgNum = 0;
+      for (let k = 0; k < spe[i].text.length; k++) {
+        let block = document.createElement("div");
+        data = spe[i].text[k];
+
+        let tx = document.createElement("p");
+        tx.textContent = data.text;
+        block.appendChild(tx);
+
+        for (let n = 0; n < data.imgNum; n++) {
+          let image = document.createElement("img");
+          const s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPImages/S_${str}_${imgNum}`;
+          image.src = s;
+          imgNum++;
+          block.appendChild(image);
+        }
+        parent.appendChild(block);
+      }
+      return;
     }
   }
+
+  console.log(str + " not Found");
 }
 
 async function checkFileExists(url) {
