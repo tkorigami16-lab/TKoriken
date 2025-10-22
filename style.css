@@ -392,7 +392,7 @@ ul.ilist.right img {
   .container {
     max-width: 800px;
     margin: 0px auto;
-    padding: 20px;
+    padding: 0px;
     text-align: center;
     background-color: #261d32;
     background-image: none;
@@ -456,7 +456,7 @@ ul.ilist.right img {
   .container {
     max-width: 800px;
     margin: 0px auto;
-    padding: 20px;
+    padding: 0px;
     background-color: #261d32;
     background-image: none;
     border: 0px solid #ddd;
