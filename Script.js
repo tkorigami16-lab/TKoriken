@@ -155,7 +155,6 @@ async function Awake() {
       CreateMainContents();
     });
     desktopmenubox.append(cloneH);
-    //desktopmenubox.append(clone);
 
     for (let i = 0; i < set.length; i++) {
       let child = document.createElement("li");
@@ -213,111 +212,10 @@ async function Awake() {
     console.log("some Error happened");
   }
 
+  await delay(200);
   black.classList.add("hidden");
 
   let completeLoadMain = CreateMainContents();
-
-  /*
-  try {
-    if (chachIndex == null) {
-      const res = await fetch(
-        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/index.json"
-      );
-      chachIndex = await res.json();
-    }
-
-    const fileList = chachIndex;
-    let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
-    maxTask += 2 * fileList.index.length;
-    let RLnum = 0;
-
-    for (const data of fileList.index) {
-      let item = document.createElement("li"); //子オブジェクトを作成
-      let con = document.createElement("div");
-      con.style.display = "flex";
-
-      let img = document.createElement("img");
-      let d = document.createElement("div");
-      d.classList.add("captions");
-
-      let s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${data.productName}.webp`;
-      if (
-        (await checkFileExists(
-          basePath + "/data/WEBPimages/" + data.productName + ".webp"
-        )) == true
-      ) {
-        img.src = s;
-        //img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
-        img.alt = ".webp";
-        img.width = 200;
-        img.height = 200;
-        item.appendChild(img);
-      } else {
-        carry += 2;
-        SetProgress();
-        item.remove();
-        img.remove();
-        d.remove();
-        console.log(data.productName + " img not found");
-        return;
-      }
-
-      carry++;
-      SetProgress();
-
-      let str = data.productName;
-      const names = str.split("_");
-
-      let pro = document.createElement("p");
-      pro.textContent = "■ " + names[0];
-      pro.style.fontSize = "32px";
-      d.appendChild(pro);
-
-      let inv = document.createElement("p");
-      inv.textContent = "創作 : " + data.inventor;
-      inv.style.fontSize = "20px";
-      d.appendChild(inv);
-
-      let manu = document.createElement("p");
-      manu.textContent = "作成 : " + data.manufacturer;
-      manu.style.fontSize = "20px";
-      d.appendChild(manu);
-
-      let paper = document.createElement("p");
-      paper.textContent = "紙 : " + data.paper;
-      paper.style.fontSize = "16px";
-      d.appendChild(paper);
-
-      let comtxt = document.createElement("p");
-      comtxt.textContent = data.comment;
-      comtxt.style.fontSize = "16px";
-      d.appendChild(comtxt);
-
-      carry++;
-      SetProgress();
-
-      if (RLnum % 2 == 1) {
-        item.classList.add("left");
-        d.classList.add("right");
-        con.appendChild(img);
-        con.appendChild(d);
-        prods.push(new ProductBox(img, d, item, false));
-      } else {
-        item.classList.add("right");
-        d.classList.add("left");
-        con.appendChild(d);
-        con.appendChild(img);
-        prods.push(new ProductBox(img, d, item, true));
-      }
-      item.appendChild(con);
-
-      RLnum++;
-      imageList.appendChild(item);
-      console.log(data.productName + " Created");
-    }
-  } catch {}
-  console.log("Create All Items");
-  */
 
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -333,15 +231,7 @@ async function Awake() {
     }
   });
 
-  /*
-  prog.style.width = "100%";
-  prog.style.backgroundColor = "#44dc81";
-  span.textContent = "Complete Loading";
-  */
-
-  await delay(1000);
-
-  //wrap.style.display = "None";
+  await delay(600);
   loading.style.opacity = 0;
 
   container.classList.remove("hidden");
@@ -369,7 +259,6 @@ async function CreateMainContents() {
     let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
     imageList.innerHTML = "";
 
-    //maxTask += 2 * fileList.index.length;
     let RLnum = 0;
 
     for (const data of fileList.index) {
@@ -389,23 +278,17 @@ async function CreateMainContents() {
         )) == true
       ) {
         img.src = s;
-        //img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
         img.alt = ".webp";
         img.width = 200;
         img.height = 200;
         item.appendChild(img);
       } else {
-        //carry += 2;
-        //SetProgress();
         item.remove();
         img.remove();
         d.remove();
         console.log(data.productName + " img not found");
         return;
       }
-
-      //carry++;
-      //SetProgress();
 
       let str = data.productName;
       const names = str.split("_");
