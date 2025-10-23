@@ -57,7 +57,7 @@ let chachIndex = null;
 let chachSpecial = null;
 let contentLoading = false;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@alpha1";
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.0";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -81,24 +81,7 @@ async function Awake() {
   let container = document.getElementById("cont");
   container.classList.add("hidden");
 
-  //Set Wrap
-  //let wrap = document.getElementById("wrap");
-  //wrap.classList.remove("hidden");
-
-  /*
-  let prog = document.getElementById("prog");
-  let span = document.getElementById("LSpan");
-  span.textContent = "0 / 0";
-  let carry = 0;
-  let maxTask = 0;
-  prog.style.width = "0%";
-  const SetProgress = () => {
-    if (maxTask == 0) return;
-    prog.style.width = (carry / maxTask) * 100 + "%";
-    span.textContent = carry + " / " + maxTask;
-  };
-  */
-
+  //Black
   let black = document.getElementById("Black");
   black.style.opacity = 1;
 
@@ -259,6 +242,12 @@ async function CreateMainContents() {
     let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
     imageList.innerHTML = "";
 
+    let parent = document.getElementById("SpecialContent");
+    parent.innerHTML = "";
+
+    let CtitleImg = document.getElementById("ContentTitle_Image");
+    CtitleImg.src = "";
+
     let RLnum = 0;
 
     for (const data of fileList.index) {
@@ -358,7 +347,7 @@ async function CreateMainContents() {
       });
     });
 
-    document.getElementById("mainDiv").classList.remove("hedden");
+    document.getElementById("mainDiv").classList.remove("hidden");
 
     contentLoading = false;
     console.log("Create All Items");
@@ -389,6 +378,7 @@ async function CreateSpecialContents(str) {
     if (spe[i].title == str) {
       console.log(str);
 
+      document.getElementById("mainDiv").classList.add("hidden");
       let imageList = document.getElementById("image-list");
       imageList.innerHTML = "";
 
@@ -428,7 +418,6 @@ async function CreateSpecialContents(str) {
         parent.appendChild(block);
       }
 
-      document.getElementById("mainDiv").classList.add("hidden");
       contentLoading = false;
       return;
     }
