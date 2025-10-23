@@ -4,22 +4,24 @@
     <meta charset="UTF-8" />
     <title>筑駒折り紙研究会2025</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .x-icon {
+        font-size: 40px;
+        color: black;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <div class="wrapper" id="wrap">
-      <div class="progress-container">
-        <div class="progress-bar" id="prog" style="width: 0%">
-          <span class="loadSpan" id="LSpan"></span>
-        </div>
-      </div>
-    </div>
-
     <div id="overlay"></div>
     <div id="Black"></div>
     <img id="BackGroundImage" />
 
     <div id="loadPanel" class="loading">
-      <img id="TitleBack" />
       <img src="" alt="" id="TitleImage" />
     </div>
 
@@ -31,7 +33,7 @@
     </header>
 
     <main>
-      <div>
+      <div id="mainDiv">
         <div id="cont" class="container">
           <aside class="desktop-menu">
             <div style="display: block">
@@ -48,14 +50,15 @@
               background-repeat: no-repeat;
               background-position: top;
               text-align: center;
-              margin: 10px;
+              margin-top: 60px;
+              padding-top: 120px;
             "
           >
             <p>ORION</p>
             <p style="font-size: 82px">折音</p>
-            <p>筑駒折り紙研究会 2025 presents</p>
+            <p>筑駒折紙研究会 2025 Presents</p>
             <br />
-            <br /><br />
+            <br />
             <div style="justify-content: start">
               <p style="margin-left: 140px; text-align: left; font-size: 32px">
                 聞こう、
@@ -68,19 +71,23 @@
             />
             <div style="justify-content: end">
               <p
-                style="margin-right: 140px; text-align: right; font-size: 32px"
+                style="
+                  margin-right: 140px;
+                  text-align: right;
+                  font-size: 32px;
+                  margin-bottom: 200px;
+                "
               >
                 星の瞬きを。
               </p>
             </div>
             <br />
+            <br />
           </div>
 
-          <div style="background-color: black"></div>
-
-          <div>
+          <div style="padding: 20px; display: flex; justify-content: start">
             <div>
-              <p style="font-size: 48px">■ 筑駒文化祭で展示を行います！</p>
+              <p style="font-size: 38px">■ 筑駒文化祭で展示を行います！</p>
               <p>
                 　10月31日、11月1,2日の三日間、筑駒文化祭で展示活動を行います。例年の会員の個人作品だけでなく、『龍神3.5』や『フェニックス』などの大型の作品を特設してお待ちしております。是非ご来場ください。<br />
                 <a href="https://tsukukoma.bunkasai.info/"
@@ -91,10 +98,21 @@
             <img
               src="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/筑駒正面.webp"
               alt=""
+              style="height: 440px; width: auto; margin: 20px"
             />
           </div>
-          <p style="font-size: 24px">個人作品</p>
-          <section class="content">
+
+          <a href="https://x.com/your_account_name" target="_blank">
+            <i class="fa-brands fa-x-twitter x-icon"></i>
+          </a>
+
+          <div style="text-align: left; padding: 20px">
+            <p style="font-size: 38px">■ 個人作品</p>
+            <p>
+              　筑駒折り研の会員が折った作品です。こだわり抜いたライティングから感じられる紙の繊細な表情をお楽しみください。
+            </p>
+          </div>
+          <section style="padding: 20px" class="content">
             <img id="ContentTitle_Image" />
             <ul id="image-list" class="ilist"></ul>
             <div id="SpecialContent"></div>

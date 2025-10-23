@@ -34,6 +34,7 @@ class ProductBox {
         this.con.classList.remove("right");
         this.parent.appendChild(this.con);
         this.parent.appendChild(this.img);
+        this.parent.style.justifyContent = "flex-end";
         this.img.classList.add("right");
         this.con.classList.add("left");
       } else {
@@ -41,6 +42,7 @@ class ProductBox {
         this.con.classList.remove("left");
         this.parent.appendChild(this.img);
         this.parent.appendChild(this.con);
+        this.parent.style.justifyContent = "flex-start";
         this.img.classList.add("left");
         this.con.classList.add("right");
       }
@@ -81,8 +83,10 @@ async function Awake() {
   container.classList.add("hidden");
 
   //Set Wrap
-  let wrap = document.getElementById("wrap");
-  wrap.classList.remove("hidden");
+  //let wrap = document.getElementById("wrap");
+  //wrap.classList.remove("hidden");
+
+  /*
   let prog = document.getElementById("prog");
   let span = document.getElementById("LSpan");
   span.textContent = "0 / 0";
@@ -94,6 +98,7 @@ async function Awake() {
     prog.style.width = (carry / maxTask) * 100 + "%";
     span.textContent = carry + " / " + maxTask;
   };
+  */
 
   let black = document.getElementById("Black");
   black.style.opacity = 1;
@@ -110,7 +115,7 @@ async function Awake() {
     const set = chachSpecial.special;
     let mobilemenuBox = document.getElementById("mobileMenuList");
     let desktopmenubox = document.getElementById("desktopMenuList");
-    maxTask += 2 * set.length;
+    //maxTask += 2 * set.length;
 
     //Body
     let BGI = document.getElementById("BackGroundImage");
@@ -152,8 +157,8 @@ async function Awake() {
 
       child.appendChild(b);
       mobilemenuBox.appendChild(child);
-      carry++;
-      SetProgress();
+      //carry++;
+      //SetProgress();
 
       let clone = child.cloneNode(true);
       let clonedButton = clone.querySelector("button");
@@ -163,8 +168,8 @@ async function Awake() {
       });
       desktopmenubox.append(clone);
       desktopmenubox.append(clone);
-      carry++;
-      SetProgress();
+      //carry++;
+      //SetProgress();
     }
     console.log("Menu SetUp Complete");
 
@@ -197,6 +202,9 @@ async function Awake() {
 
   black.classList.add("hidden");
 
+  let completeLoadMain = CreateMainContents();
+
+  /*
   try {
     if (chachIndex == null) {
       const res = await fetch(
@@ -296,6 +304,7 @@ async function Awake() {
     }
   } catch {}
   console.log("Create All Items");
+  */
 
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -311,23 +320,15 @@ async function Awake() {
     }
   });
 
-  window.addEventListener("resize", () => {
-    prods.forEach((box) => {
-      box.ReOrder(window.innerWidth < 1279);
-    });
-  });
-
-  prods.forEach((box) => {
-    box.ReOrder(window.innerWidth < 1279);
-  });
-
+  /*
   prog.style.width = "100%";
   prog.style.backgroundColor = "#44dc81";
   span.textContent = "Complete Loading";
+  */
 
-  wrap.style.display = "None";
+  //wrap.style.display = "None";
   loading.style.opacity = 0;
-  await delay(200);
+  await delay(600);
 
   container.classList.remove("hidden");
   await delay(800);
@@ -338,7 +339,130 @@ async function Awake() {
   over.classList.add("hidden");
   wrap.classList.add("hidden");
   loading.classList.add("hidden");
+
+  await completeLoadMain;
   loadOk = false;
+}
+
+async function CreateMainContents() {
+  const basePath = "https://tkorigami16-lab.github.io/TKoriken";
+  try {
+    if (chachIndex == null) {
+      const res = await fetch(
+        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/index.json"
+      );
+      chachIndex = await res.json();
+    }
+
+    const fileList = chachIndex;
+    let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
+    //maxTask += 2 * fileList.index.length;
+    let RLnum = 0;
+
+    for (const data of fileList.index) {
+      let item = document.createElement("li"); //子オブジェクトを作成
+      let con = document.createElement("div");
+      con.style.display = "flex";
+      con.classList.add("PARENT");
+
+      let img = document.createElement("img");
+      let d = document.createElement("div");
+      d.classList.add("captions");
+
+      let s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${data.productName}.webp`;
+      if (
+        (await checkFileExists(
+          basePath + "/data/WEBPimages/" + data.productName + ".webp"
+        )) == true
+      ) {
+        img.src = s;
+        //img.src = basePath + "/data/WEBPimages/" + data.productName + ".webp";
+        img.alt = ".webp";
+        img.width = 200;
+        img.height = 200;
+        item.appendChild(img);
+      } else {
+        //carry += 2;
+        //SetProgress();
+        item.remove();
+        img.remove();
+        d.remove();
+        console.log(data.productName + " img not found");
+        return;
+      }
+
+      //carry++;
+      //SetProgress();
+
+      let str = data.productName;
+      const names = str.split("_");
+
+      let pro = document.createElement("p");
+      pro.textContent = "■ " + names[0];
+      pro.style.fontSize = "32px";
+      d.appendChild(pro);
+
+      let inv = document.createElement("p");
+      inv.textContent = "創作 : " + data.inventor;
+      inv.style.fontSize = "20px";
+      d.appendChild(inv);
+
+      let manu = document.createElement("p");
+      manu.textContent = "作成 : " + data.manufacturer;
+      manu.style.fontSize = "20px";
+      d.appendChild(manu);
+
+      let paper = document.createElement("p");
+      paper.textContent = "紙 : " + data.paper;
+      paper.style.fontSize = "16px";
+      d.appendChild(paper);
+
+      let comtxt = document.createElement("p");
+      comtxt.textContent = data.comment;
+      comtxt.style.fontSize = "16px";
+      d.appendChild(comtxt);
+
+      //carry++;
+      //SetProgress();
+
+      if (RLnum % 2 == 1) {
+        item.classList.add("left");
+        d.classList.add("right");
+        con.appendChild(img);
+        con.appendChild(d);
+        let p = new ProductBox(img, d, con, false);
+        p.ReOrder(window.innerWidth < 1279);
+        prods.push(p);
+      } else {
+        item.classList.add("right");
+        d.classList.add("left");
+        con.appendChild(d);
+        con.appendChild(img);
+        let p = new ProductBox(img, d, con, true);
+        p.ReOrder(window.innerWidth < 1279);
+      }
+      item.appendChild(con);
+
+      RLnum++;
+      imageList.appendChild(item);
+      console.log(data.productName + " Created");
+    }
+
+    prods.forEach((box) => {
+      box.ReOrder(window.innerWidth < 1279);
+    });
+
+    window.addEventListener("resize", () => {
+      prods.forEach((box) => {
+        box.ReOrder(window.innerWidth < 1279);
+      });
+    });
+
+    return true;
+  } catch {
+    console.log("some");
+  }
+  console.log("Create All Items");
 }
 
 async function CreateSpecialContents(str) {

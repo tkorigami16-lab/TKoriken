@@ -1,19 +1,21 @@
 html {
-  margin: 0;
-  padding: 0;
-  background-color: #000000;
+  overflow: auto;
+}
+
+body {
+  overflow: auto;
 }
 
 html.no-scroll,
 body.no-scroll {
   overflow: hidden;
-  height: 100%;
 }
 
 p {
   color: white;
-  font-size: 22px;
+  font-size: 19px;
   white-space: pre-line;
+  margin: 0px;
 }
 
 .header {
@@ -58,6 +60,22 @@ p {
 #menuIcon {
   width: 100%;
   height: auto;
+}
+
+#mainDiv {
+  display: block;
+}
+
+#mainDiv .hidden {
+  display: none;
+}
+
+#subDiv {
+  display: block;
+}
+
+#subDiv .hidden {
+  display: none;
 }
 
 .loading {
@@ -157,13 +175,6 @@ body {
 
 #Black.hidden {
   display: none;
-}
-
-#TitleImage {
-  height: 100vh;
-  width: 100vh;
-  text-align: center;
-  align-items: center;
 }
 
 #TitleImage {
@@ -309,7 +320,7 @@ ul.ilist li.left {
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 ul.ilist li.right {
@@ -317,7 +328,7 @@ ul.ilist li.right {
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 ul.ilist img {
