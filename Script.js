@@ -476,7 +476,6 @@ async function CreateMainContents() {
     });
 
     document.getElementById("mainDiv").classList.remove("hedden");
-    document.getElementById("subDiv").classList.add("hidden");
 
     contentLoading = false;
     console.log("Create All Items");
@@ -546,7 +545,6 @@ async function CreateSpecialContents(str) {
         parent.appendChild(block);
       }
 
-      document.getElementById("subDiv").classList.remove("hidden");
       document.getElementById("mainDiv").classList.add("hidden");
       contentLoading = false;
       return;
