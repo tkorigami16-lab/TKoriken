@@ -337,7 +337,6 @@ async function Awake() {
   document.documentElement.classList.remove("no-scroll");
   document.body.classList.remove("no-scroll");
   over.classList.add("hidden");
-  wrap.classList.add("hidden");
   loading.classList.add("hidden");
 
   await completeLoadMain;
@@ -403,7 +402,11 @@ async function CreateMainContents() {
       d.appendChild(pro);
 
       let inv = document.createElement("p");
-      inv.textContent = "創作 : " + data.inventor;
+      if (data.invent) {
+        inv.textContent = "会員創作作品";
+      } else {
+        inv.textContent = "創作 : " + data.inventor;
+      }
       inv.style.fontSize = "20px";
       d.appendChild(inv);
 
