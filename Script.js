@@ -55,7 +55,7 @@ let prods = [];
 
 let chachIndex = null;
 let chachSpecial = null;
-let loadOk = false;
+let contentLoading = false;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
 const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@alpha1";
 
@@ -66,8 +66,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function Awake() {
-  loadOk = true;
-
   document.documentElement.classList.add("no-scroll");
   document.body.classList.add("no-scroll");
 
@@ -141,6 +139,24 @@ async function Awake() {
       console.log("Fail to load menuIcon");
     }
 
+    let home = document.createElement("li");
+    let bo = document.createElement("button");
+    bo.type = "button";
+    bo.addEventListener("click", () => {
+      CreateMainContents();
+    });
+    bo.classList.add("luxury-button");
+    bo.textContent = "ホーム";
+    home.appendChild(bo);
+    mobilemenuBox.appendChild(home);
+    let cloneH = home.cloneNode(true);
+    let clonedButtonH = cloneH.querySelector("button");
+    clonedButtonH.addEventListener("click", () => {
+      CreateMainContents();
+    });
+    desktopmenubox.append(cloneH);
+    //desktopmenubox.append(clone);
+
     for (let i = 0; i < set.length; i++) {
       let child = document.createElement("li");
       let b = document.createElement("button");
@@ -164,7 +180,7 @@ async function Awake() {
         CreateSpecialContents(set[i].title);
       });
       desktopmenubox.append(clone);
-      desktopmenubox.append(clone);
+      //desktopmenubox.append(clone);
       //carry++;
       //SetProgress();
 
@@ -338,10 +354,11 @@ async function Awake() {
   loading.classList.add("hidden");
 
   await completeLoadMain;
-  loadOk = false;
 }
 
 async function CreateMainContents() {
+  if (contentLoading) return;
+  contentLoading = true;
   try {
     if (chachIndex == null) {
       const res = await fetch(jsPath + "/data/index.json");
@@ -350,6 +367,8 @@ async function CreateMainContents() {
 
     const fileList = chachIndex;
     let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
+    imageList.innerHTML = "";
+
     //maxTask += 2 * fileList.index.length;
     let RLnum = 0;
 
@@ -456,15 +475,22 @@ async function CreateMainContents() {
       });
     });
 
+    document.getElementById("mainDiv").classList.remove("hedden");
+    document.getElementById("subDiv").classList.add("hidden");
+
+    contentLoading = false;
+    console.log("Create All Items");
     return true;
   } catch {
+    contentLoading = false;
     console.log("some");
   }
-  console.log("Create All Items");
 }
 
 async function CreateSpecialContents(str) {
-  if (loadOk) return;
+  if (contentLoading) return;
+  contentLoading = true;
+
   if (chachSpecial == null) {
     const res = await fetch(
       "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/SpecialIndex.json"
@@ -519,10 +545,15 @@ async function CreateSpecialContents(str) {
         }
         parent.appendChild(block);
       }
+
+      document.getElementById("subDiv").classList.remove("hidden");
+      document.getElementById("mainDiv").classList.add("hidden");
+      contentLoading = false;
       return;
     }
   }
 
+  contentLoading = false;
   console.log(str + " not Found");
 }
 

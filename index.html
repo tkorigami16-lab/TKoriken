@@ -33,15 +33,44 @@
     </header>
 
     <main>
-      <div id="mainDiv">
-        <div id="cont" class="container">
-          <aside class="desktop-menu">
-            <div style="display: block; text-align: center">
-              <img id="menuIcon" />
-              <ul id="desktopMenuList"></ul>
-            </div>
-          </aside>
+      <div id="cont" class="container">
+        <aside class="desktop-menu">
+          <div style="display: block; text-align: center">
+            <img id="menuIcon" />
+            <ul id="desktopMenuList" style="list-style: none"></ul>
+            <div style="display: flex; justify-content: start">
+              <div style="padding: 10px">
+                <a
+                  href="https://x.com/tk_oriken"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackFog.webp"
+                    alt="X Icon"
+                    style="width: 64px; height: 64px; background-color: white"
+                  />
+                </a>
+              </div>
 
+              <div style="padding: 10px">
+                <a
+                  href="https://www.instagram.com/tk_oriken/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackFog.webp"
+                    alt="Instagram Icon"
+                    style="width: 64px; height: 64px"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div id="mainDiv">
           <!--タイトルイメージ-->
           <div
             style="
@@ -106,16 +135,14 @@
             />
           </div>
 
-          <a href="https://x.com/your_account_name" target="_blank">
-            <i class="fa-brands fa-x-twitter x-icon"></i>
-          </a>
-
           <div style="text-align: left; padding: 20px">
             <p style="font-size: 38px">■ 個人作品</p>
             <p>
               　筑駒折り研の会員が折った作品です。こだわり抜いたライティングから感じられる紙の繊細な表情をお楽しみください。
             </p>
           </div>
+        </div>
+        <div>
           <section style="padding: 20px" class="content">
             <img id="ContentTitle_Image" />
             <ul id="image-list" class="ilist"></ul>
@@ -123,8 +150,25 @@
             <div style="height: fit-content"></div>
           </section>
         </div>
+        <div id="subDiv" class="hidden"></div>
+        <!--タイトルイメージ-->
+        <div
+          style="
+            display: block;
+            background-image: url(https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackFog.webp);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 120px;
+          "
+        >
+          <img src="" alt="" id="SpecialTitleImg" />
+        </div>
       </div>
     </main>
+    <div></div>
     <script src="Script.js"></script>
   </body>
 </html>
