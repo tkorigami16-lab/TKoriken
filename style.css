@@ -57,6 +57,12 @@ p {
   z-index: 100;
 }
 
+#desktopMenuList {
+  padding: 0px;
+  margin: 0px;
+  justify-items: start;
+}
+
 #menuIcon {
   width: 100%;
   height: auto;
@@ -399,7 +405,7 @@ ul.ilist.right img {
 }
 
 /* スマホ表示 */
-@media (max-width: 1280px) {
+@media (max-width: 280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;
@@ -414,6 +420,8 @@ ul.ilist.right img {
   .hamburger {
     display: block;
     position: fixed;
+    text-align: center;
+    font-size: 36px;
   }
 
   .mobile-menu {
@@ -421,7 +429,6 @@ ul.ilist.right img {
     position: fixed;
     top: 120px;
     left: 0;
-    width: 100%;
     background: #444;
     color: white;
   }
@@ -463,7 +470,7 @@ ul.ilist.right img {
 }
 
 /* PC表示 */
-@media (min-width: 1280px) {
+@media (min-width: 280px) {
   .container {
     max-width: 800px;
     margin: 0px auto;
@@ -478,7 +485,7 @@ ul.ilist.right img {
     text-align: left;
     display: flex;
     position: fixed;
-    padding: 0px;
+    padding: 10px;
     margin-left: -270px;
     background-color: #000000;
     border: 0px solid #ffffff;

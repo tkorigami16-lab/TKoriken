@@ -56,6 +56,8 @@ let prods = [];
 let chachIndex = null;
 let chachSpecial = null;
 let loadOk = false;
+const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@alpha";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -65,7 +67,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function Awake() {
   loadOk = true;
-  const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
 
   document.documentElement.classList.add("no-scroll");
   document.body.classList.add("no-scroll");
@@ -106,9 +107,7 @@ async function Awake() {
   //Title,MenuBox
   try {
     if (chachSpecial == null) {
-      const res = await fetch(
-        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/SpecialIndex.json"
-      );
+      const res = await fetch(jsPath + "/data/SpecialIndex.json");
       const json = await res.json();
       chachSpecial = json;
     }
@@ -119,8 +118,7 @@ async function Awake() {
 
     //Body
     let BGI = document.getElementById("BackGroundImage");
-    let s =
-      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
+    let s = jsPath + "/data/WEBPimages/BackGroundImage.webp";
 
     if (
       (await checkFileExists(
@@ -135,8 +133,7 @@ async function Awake() {
 
     //Menu
     let menuIcon = document.getElementById("menuIcon");
-    s =
-      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/MenuBox.webp";
+    s = jsPath + "/data/WEBPimages/MenuBox.webp";
     if (await checkFileExists(basePath + "/data/WEBPimages/MenuBox.webp")) {
       menuIcon.src = s;
       console.log("menuIcon ok");
@@ -170,14 +167,15 @@ async function Awake() {
       desktopmenubox.append(clone);
       //carry++;
       //SetProgress();
+
+      console.log(set[i].title);
     }
     console.log("Menu SetUp Complete");
 
     //Title
     let titleImage = document.getElementById("TitleImage");
 
-    s =
-      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/Title.webp";
+    s = jsPath + "/data/WEBPimages/Title.webp";
 
     if (await checkFileExists(basePath + "/data/WEBPimages/Title.webp")) {
       titleImage.src = s;
@@ -187,8 +185,7 @@ async function Awake() {
     }
 
     let cont = document.getElementById("cont");
-    s =
-      "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackGroundImage.webp";
+    s = jsPath + "/data/WEBPimages/BackGroundImage.webp";
     if (
       await checkFileExists(basePath + "/data/WEBPimages/BackGroundImage.webp")
     ) {
@@ -326,9 +323,10 @@ async function Awake() {
   span.textContent = "Complete Loading";
   */
 
+  await delay(1000);
+
   //wrap.style.display = "None";
   loading.style.opacity = 0;
-  await delay(600);
 
   container.classList.remove("hidden");
   await delay(800);
@@ -344,12 +342,9 @@ async function Awake() {
 }
 
 async function CreateMainContents() {
-  const basePath = "https://tkorigami16-lab.github.io/TKoriken";
   try {
     if (chachIndex == null) {
-      const res = await fetch(
-        "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/index.json"
-      );
+      const res = await fetch(jsPath + "/data/index.json");
       chachIndex = await res.json();
     }
 
@@ -368,7 +363,7 @@ async function CreateMainContents() {
       let d = document.createElement("div");
       d.classList.add("captions");
 
-      let s = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${data.productName}.webp`;
+      let s = jsPath + `/data/WEBPimages/${data.productName}.webp`;
       if (
         (await checkFileExists(
           basePath + "/data/WEBPimages/" + data.productName + ".webp"
