@@ -4,7 +4,7 @@ class ProductBox {
     this.con = box;
     this.parent = parent;
     this.RL = RL; //R:True,L:False
-    this.ReSetHeight();
+    //this.ReSetHeight();
   }
 
   ReSetHeight() {
@@ -14,7 +14,7 @@ class ProductBox {
       height += p.height;
     });
 
-    this.img.style.height = `${height}px`;
+    //this.img.style.height = `${height}px`;
   }
 
   ReOrder(small) {
@@ -46,7 +46,6 @@ class ProductBox {
         this.img.classList.add("left");
         this.con.classList.add("right");
       }
-      this.ReSetHeight();
     }
   }
 }
@@ -248,6 +247,8 @@ async function CreateMainContents() {
     let CtitleImg = document.getElementById("ContentTitle_Image");
     CtitleImg.src = "";
 
+    document.getElementById("mainDiv").classList.remove("hidden");
+
     let RLnum = 0;
 
     for (const data of fileList.index) {
@@ -268,8 +269,8 @@ async function CreateMainContents() {
       ) {
         img.src = s;
         img.alt = ".webp";
-        img.width = 200;
-        img.height = 200;
+        //img.width = 200;
+        //img.height = 200;
         item.appendChild(img);
       } else {
         item.remove();
@@ -288,7 +289,7 @@ async function CreateMainContents() {
       d.appendChild(pro);
 
       let inv = document.createElement("p");
-      if (data.invent) {
+      if (data.invent == "True") {
         inv.textContent = "会員創作作品";
       } else {
         inv.textContent = "創作 : " + data.inventor;
@@ -329,6 +330,7 @@ async function CreateMainContents() {
         con.appendChild(img);
         let p = new ProductBox(img, d, con, true);
         p.ReOrder(window.innerWidth < 1279);
+        prods.push(p);
       }
       item.appendChild(con);
 
@@ -346,8 +348,6 @@ async function CreateMainContents() {
         box.ReOrder(window.innerWidth < 1279);
       });
     });
-
-    document.getElementById("mainDiv").classList.remove("hidden");
 
     contentLoading = false;
     console.log("Create All Items");
