@@ -410,6 +410,7 @@ async function CreateSpecialContents(str) {
             imgNum++;
             block.appendChild(image);
           } else {
+            imgNum++;
             console.log(
               "NG : " + basePath + `/data/WEMPimages/S_${str}_${imgNum}`
             );
