@@ -22,7 +22,7 @@ class ProductBox {
       this.parent.style.display = "block";
       this.parent.appendChild(this.img);
       this.parent.appendChild(this.con);
-      this.img.style.width = "420px";
+      this.img.style.width = "auto";
       this.img.classList.remove("right");
       this.con.classList.remove("left");
       this.img.classList.add("left");
@@ -257,6 +257,7 @@ async function CreateMainContents() {
     document.getElementById("mainDiv").classList.remove("hidden");
 
     let RLnum = 0;
+    let a = "420";
 
     for (const data of fileList.index) {
       let item = document.createElement("li"); //子オブジェクトを作成
