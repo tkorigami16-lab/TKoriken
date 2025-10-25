@@ -206,6 +206,17 @@ header {
   width: 100%;
 }
 
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 0.4s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .luxury-button {
   background-color: #ffffff;
   color: #111111;
@@ -230,41 +241,6 @@ header {
 .luxury-button:active {
   transform: scale(0.98);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
-.wrapper {
-  display: flex;
-  justify-content: center; /* 横方向中央 */
-  background-color: #f0f0f000;
-  transition: opacity 1.8s;
-}
-
-.wrapper.hidden {
-  display: none;
-}
-
-.progress-container {
-  display: flex;
-  position: fixed;
-  align-items: center;
-  max-width: 400px;
-  z-index: 209;
-  width: 100%;
-  background-color: #606060;
-  border-radius: 10px;
-  border: 1px solid #ffffff;
-  overflow: hidden;
-  height: 12px;
-}
-
-.progress-bar {
-  position: relative;
-  text-align: center;
-  z-index: 210;
-  height: 14px;
-  background-color: #ffbee8;
-  width: 0%;
-  transition: width 0.3s ease;
 }
 
 .loadSpan {
@@ -427,16 +403,19 @@ ul.ilist.right img {
     display: block;
     position: fixed;
     text-align: center;
-    font-size: 36px;
+    font-size: 48px;
   }
 
   .mobile-menu {
-    display: none;
     position: fixed;
-    top: 120px;
-    left: 0;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
     background: #444;
     color: white;
+    transition: right 0.3s ease;
+    padding-top: 60px;
   }
 
   .mobile-menu.active {

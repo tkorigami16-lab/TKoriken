@@ -55,6 +55,8 @@ let prods = [];
 let chachIndex = null;
 let chachSpecial = null;
 let contentLoading = false;
+let fadeImages = null;
+let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
 const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.4";
 
@@ -237,6 +239,11 @@ async function CreateMainContents() {
       chachIndex = await res.json();
     }
 
+    window.scrollTo({
+      top: 0, // 500pxの位置へスクロール
+      behavior: "smooth", // スムーズにスクロール
+    });
+
     const fileList = chachIndex;
     let imageList = document.getElementById("image-list"); //コンテンツの親オブジェクト
     imageList.innerHTML = "";
@@ -271,6 +278,7 @@ async function CreateMainContents() {
         img.alt = ".webp";
         //img.width = 200;
         //img.height = 200;
+        img.classList.add("fade-in");
         item.appendChild(img);
       } else {
         item.remove();
@@ -349,6 +357,8 @@ async function CreateMainContents() {
       });
     });
 
+    SetFadeIn();
+
     contentLoading = false;
     console.log("Create All Items");
     return true;
@@ -370,17 +380,19 @@ async function CreateSpecialContents(str) {
     chachSpecial = json;
   }
 
-  console.log("AAA");
   const basePath = "https://tkorigami16-lab.github.io/TKoriken";
 
   const spe = chachSpecial.special;
   for (let i = 0; i < spe.length; i++) {
     if (spe[i].title == str) {
-      console.log(str);
-
       document.getElementById("mainDiv").classList.add("hidden");
       let imageList = document.getElementById("image-list");
       imageList.innerHTML = "";
+
+      window.scrollTo({
+        top: 0, // 500pxの位置へスクロール
+        behavior: "smooth", // スムーズにスクロール
+      });
 
       let CtitleImg = document.getElementById("ContentTitle_Image");
       if (await (basePath + `/data/WEBPimages/${str}_TitleImg.webp`))
@@ -407,6 +419,7 @@ async function CreateSpecialContents(str) {
             image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/S_${str}_${imgNum}.webp`;
             image.style.width = "100%";
             image.style.height = "auto";
+            image.classList.add("fade-in");
             imgNum++;
             block.appendChild(image);
           } else {
@@ -419,6 +432,8 @@ async function CreateSpecialContents(str) {
         parent.appendChild(block);
       }
 
+      SetFadeIn();
+
       contentLoading = false;
       return;
     }
@@ -426,6 +441,26 @@ async function CreateSpecialContents(str) {
 
   contentLoading = false;
   console.log(str + " not Found");
+}
+
+function SetFadeIn() {
+  fadeImages = document.querySelectorAll(".fade-in");
+
+  fadeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          fadeObserver.unobserve(entry.target); // 一度表示されたら監視解除
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+    }
+  );
+
+  fadeImages.forEach((img) => fadeObserver.observe(img));
 }
 
 async function checkFileExists(url) {
