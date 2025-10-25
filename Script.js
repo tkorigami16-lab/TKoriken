@@ -22,7 +22,7 @@ class ProductBox {
       this.parent.style.display = "block";
       this.parent.appendChild(this.img);
       this.parent.appendChild(this.con);
-      this.img.style.width = "auto";
+      this.img.style.maxWidth = "90%";
       this.img.classList.remove("right");
       this.con.classList.remove("left");
       this.img.classList.add("left");
@@ -46,6 +46,8 @@ class ProductBox {
         this.img.classList.add("left");
         this.con.classList.add("right");
       }
+
+      this.img.style.maxWidth = "60%";
     }
   }
 }
@@ -419,7 +421,6 @@ async function CreateSpecialContents(str) {
           ) {
             image.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/S_${str}_${imgNum}.webp`;
             image.style.width = "100%";
-            image.style.height = "auto";
             image.classList.add("fade-in");
             imgNum++;
             block.appendChild(image);

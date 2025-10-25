@@ -320,32 +320,32 @@ ul.ilist li.right {
 }
 
 ul.ilist img {
-  max-width: 420px;
+  max-width: 80%;
   width: auto;
   height: auto;
-  margin-right: 40px;
-  margin-left: 40px;
+  margin-right: auto;
+  margin-left: auto;
   margin-bottom: 40px;
   object-fit: contain;
 }
 
 ul.ilist.left img {
-  max-width: 420px;
+  max-width: 80%;
   width: auto;
   height: auto;
-  margin-right: 40px;
-  margin-left: 40px;
+  margin-right: auto;
+  margin-left: auto;
   margin-bottom: 40px;
   text-align: left;
   object-fit: contain;
 }
 
 ul.ilist.right img {
-  max-width: 420px;
+  max-width: 80%;
   width: auto;
   height: auto;
-  margin-right: 40px;
-  margin-left: 40px;
+  margin-right: auto;
+  margin-left: auto;
   margin-bottom: 40px;
   text-align: right;
   object-fit: contain;
@@ -355,6 +355,8 @@ ul.ilist.right img {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-bottom: 100px;
 }
 
@@ -413,6 +415,7 @@ ul.ilist.right img {
   .mobile-menu {
     position: fixed;
     top: 0;
+    z-index: 1000;
     right: -250px;
     width: 250px;
     height: 100%;
@@ -425,7 +428,9 @@ ul.ilist.right img {
   .mobile-menu.active {
     display: block;
     position: sticky;
-    margin-top: 80px;
+    background-color: #00000055;
+    z-index: 1000;
+    margin-top: 100px;
     top: 200px;
     left: 0;
   }
