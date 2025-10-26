@@ -60,7 +60,7 @@ let contentLoading = false;
 let fadeImages = null;
 let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.4";
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.6";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -256,10 +256,16 @@ async function CreateMainContents() {
     let CtitleImg = document.getElementById("ContentTitle_Image");
     CtitleImg.src = "";
 
+    let CtitleTxt = document.getElementById("Content_Text");
+    CtitleTxt.style.display = "none";
+
+    document.getElementById("title_Text").textContent = "■個人作品";
+    document.getElementById("title_Exp").textContent =
+      "　筑駒折り研の会員が折った作品です。こだわり抜いたライティングから感じられる紙の繊細な表情をお楽しみください。";
+
     document.getElementById("mainDiv").classList.remove("hidden");
 
     let RLnum = 0;
-    let a = "420";
 
     for (const data of fileList.index) {
       let item = document.createElement("li"); //子オブジェクトを作成
@@ -400,6 +406,16 @@ async function CreateSpecialContents(str) {
       let CtitleImg = document.getElementById("ContentTitle_Image");
       if (await (basePath + `/data/WEBPimages/${str}_TitleImg.webp`))
         CtitleImg.src = `https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/${str}_TitleImg.webp`;
+
+      document.getElementById("flavorText").textContent = spe[i].AdoTxt;
+
+      document.getElementById("title_Text").textContent = "■" + str;
+      document.getElementById("title_Exp").textContent =
+        "-" + spe[i].flavor + "-";
+
+      let CtitleTxt = document.getElementById("Content_Text");
+      CtitleTxt.style.display = "block";
+
       let parent = document.getElementById("SpecialContent");
       parent.innerHTML = "";
 
