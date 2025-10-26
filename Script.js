@@ -433,10 +433,13 @@ async function CreateSpecialContents(str) {
       let imgNum = 0;
       for (let k = 0; k < spe[i].text.length; k++) {
         let block = document.createElement("div");
+        block.style.margin = "3%";
+        block.style.textAlign = "left";
         data = spe[i].text[k];
 
         let tx = document.createElement("p");
         tx.textContent = data.text;
+        tx.style.marginBottom = "20px";
         block.appendChild(tx);
 
         for (let n = 0; n < data.imgNum; n++) {
