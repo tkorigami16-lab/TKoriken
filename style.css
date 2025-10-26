@@ -431,8 +431,9 @@ ul.ilist.right img {
     position: sticky;
     background-color: #00000055;
     z-index: 1000;
-    margin-top: 100px;
-    top: 200px;
+    margin-top: 0px;
+    padding-top: 80px;
+    padding-bottom: 20px;
     left: 0;
   }
 

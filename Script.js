@@ -60,7 +60,7 @@ let contentLoading = false;
 let fadeImages = null;
 let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.7";
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.8";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -206,8 +206,20 @@ async function Awake() {
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
 
-  hamburger.addEventListener("click", () => {
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation(); // 他のクリックイベントに伝播しないように
     mobileMenu.classList.toggle("active");
+  });
+
+  document.addEventListener("click", (e) => {
+    // メニューが開いていて、クリックされた場所がメニューでもボタンでもない場合
+    if (
+      mobileMenu.classList.contains("active") &&
+      !mobileMenu.contains(e.target) &&
+      !hamburger.contains(e.target)
+    ) {
+      mobileMenu.classList.remove("active");
+    }
   });
 
   // スクロール追従（スマホのみ）
