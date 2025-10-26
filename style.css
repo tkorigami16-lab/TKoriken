@@ -209,6 +209,7 @@ header {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 1s ease-out, transform 0.4s ease-out;
+  margin-bottom: 40px;
 }
 
 .fade-in.visible {

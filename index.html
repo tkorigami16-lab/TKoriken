@@ -173,21 +173,26 @@
               margin-top: -10px;
               padding-top: 100px;
               padding-bottom: -30px;
+              height: fit-content;
             "
           >
-            <p id="flavorText" style="text-align: center">
-              これはテスト<br />ttt
+            <p
+              id="flavorText"
+              style="text-align: center; max-width: 80%; margin: auto"
+            >
+              ERROR
             </p>
             <br />
             <br />
           </div>
-
-          <div style="text-align: left; padding: 20px">
+          <br />
+          <div style="display: block; text-align: center; padding: 20px">
             <p style="font-size: 38px" id="title_Text">■ 個人作品</p>
-            <p id="title_Exp">
-              　筑駒折り研の会員が折った作品です。こだわり抜いたライティングから感じられる紙の繊細な表情をお楽しみください。
-            </p>
+            <div style="display: flex; justify-content: center">
+              <p id="title_Exp" style="width: 96%"></p>
+            </div>
           </div>
+          <br />
 
           <section style="padding: 20px" class="content">
             <ul id="image-list" class="ilist"></ul>

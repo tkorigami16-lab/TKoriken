@@ -60,7 +60,7 @@ let contentLoading = false;
 let fadeImages = null;
 let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.6";
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.7";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
@@ -409,9 +409,8 @@ async function CreateSpecialContents(str) {
 
       document.getElementById("flavorText").textContent = spe[i].AdoTxt;
 
-      document.getElementById("title_Text").textContent = "■" + str;
-      document.getElementById("title_Exp").textContent =
-        "-" + spe[i].flavor + "-";
+      document.getElementById("title_Text").textContent = "■ " + str;
+      document.getElementById("title_Exp").textContent = spe[i].flavor;
 
       let CtitleTxt = document.getElementById("Content_Text");
       CtitleTxt.style.display = "block";
