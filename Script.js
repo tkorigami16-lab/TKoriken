@@ -60,7 +60,7 @@ let contentLoading = false;
 let fadeImages = null;
 let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.8";
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.9";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
