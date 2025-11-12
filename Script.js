@@ -82,7 +82,7 @@ const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@ver2025";
 
 【リリースのバージョンの確認方法】
 Step.1
-GitHub DeskTop から View On Online を選択し、ブラウザで TKoriken のリポジトリを開きます。
+GitHub DeskTop のホーム画面から View On GitHub を選択し、ブラウザで TKoriken のリポジトリを開きます。
 あるいはこのリンクにアクセスしても良いです。 ⇒ https://github.com/tkorigami16-lab/TKoriken
 
 Step.2
