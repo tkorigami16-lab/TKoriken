@@ -1,13 +1,28 @@
+<!--
+修正が必要なものはコメントを残しておくので、それに従ってください。
+他の部分は、プログラムに詳しくないなら触らないようにしてください。
+
+更新記録
+2025/11/10 : 2025年完成版 (山田嗣)
+2026/
+
+-->
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=desktop-width,initial-scale=1.0" />
+
+    <!--【修正】年度ごとにタイトルを変更すること-->
     <title>筑駒折紙研究会2025</title>
+
+    <!--【修正】年度ごとに説明文を変更すること-->
     <meta
       name="description"
       content="筑駒折紙研究会2025 の公式ウェブサイトです。筑駒文化祭の関連情報や日々の活動などを発信しています。"
     />
+
     <meta name="keywords" content="筑駒,筑駒折紙研究会,筑駒文化祭,折り紙" />
     <meta
       name="google-site-verification"
@@ -16,6 +31,8 @@
     <meta name="msvalidate.01" content="CB24DDDDE9B849FEB73B0BECEB4319EE" />
 
     <link rel="stylesheet" href="style.css" />
+
+    <!--【修正】ファビコンを Products フォルダに favicon.拡張子 の形で保存すること-->
     <link
       rel="icon"
       href="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/favicon.webp"
@@ -27,6 +44,7 @@
     <div id="Black"></div>
     <img id="BackGroundImage" />
 
+    <!--【修正】タイトルイメージは Products フォルダ に Title.拡張子 の形で保存すること-->
     <div id="loadPanel" class="loading">
       <img src="" alt="" id="TitleImage" />
     </div>
@@ -42,9 +60,13 @@
       <div id="cont" class="container">
         <aside class="desktop-menu">
           <div style="display: block; text-align: center">
+            <!--【修正】メニューアイコンは Products フォルダに MenuBox.拡張子 の形で保存すること-->
             <img id="menuIcon" />
+
+            <!--メニューボタン-->
             <ul id="desktopMenuList" style="list-style: none"></ul>
             <br />
+            <!--アイコン（X,Instagram）-->
             <div class="iconBox">
               <div
                 style="
@@ -88,7 +110,16 @@
         </aside>
 
         <div id="mainDiv">
-          <!--タイトルイメージ-->
+          <!--タイトルイメージの設定-->
+          <!--
+          現在は BackFog.拡張子 がタイトルの背景と設定されている
+          背景を変更するときは、〈名前〉.拡張子 という画像ファイルを Products に上げて
+          下の background-image のリンクの BackFog.webp の名称を 〈名前〉.webp に変更してください
+
+          またこの中の要素は更新難易度高めです。
+          よくわからなかったら上の背景に
+          タイトルにしたい画像を設定し、中身のテキストをすべて削除して対応してください。
+          -->
           <div
             style="
               display: block;
@@ -101,23 +132,35 @@
               padding-top: 120px;
             "
           >
+            <!--以下の３つはタイトル表示のコード-->
             <p>ORION</p>
             <p style="font-size: 82px">折音</p>
             <p>筑駒折紙研究会 2025 Presents</p>
+
             <br />
             <br />
+
+            <!--文字、画像、文字の順で表示するコード-->
             <div style="justify-content: start">
+              <!--上段の文字-->
               <p style="margin-left: 20%; text-align: left; font-size: 32px">
                 聴こう、
               </p>
             </div>
+            <!--
+            真ん中の画像、 logo.拡張子を表示するようにしている
+            画像を変更するときは <名前>.拡張子 とした画像データを Products の保存し、
+            下の logo.webp を <名前>.webp に変更するように
+            -->
             <img
               src="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/logo.webp"
               alt=""
               style="height: 400px; width: auto"
               class="fade-in"
             />
+
             <div style="justify-content: end">
+              <!--下段の文字-->
               <p
                 style="
                   margin-right: 20%;
@@ -133,6 +176,7 @@
             <br />
           </div>
 
+          <!--【修正】ここの文言はテキトーに直して-->
           <div style="padding: 20px">
             <p>
               筑駒折紙研究会 2025 の公式ウェブサイトです。<br />
@@ -140,13 +184,16 @@
             </p>
           </div>
 
-          <!--筑駒文化祭の告知-->
+          <!--【修正】筑駒文化祭の告知-->
           <div style="padding: 20px; display: block; height: fit-content">
             <div>
               <p style="font-size: 38px">■ 筑駒文化祭で展示を行います！</p>
               <p>
                 　10月31日、11月1,2日の三日間、筑駒文化祭で展示活動を行います。会員の個人作品だけでなく、『龍神3.5』や『フェニックス』などの大型の作品を特設してお待ちしております。是非ご来場ください。
-                アクセスは<a
+                アクセスは
+
+                <!--【修正】年度ごとに文化祭の公式サイトのリンクに変更すること-->
+                <a
                   href="https://tsukukoma.bunkasai.info/"
                   style="color: aliceblue"
                   target="_blank"
@@ -171,6 +218,7 @@
           </div>
         </div>
 
+        <!--作品の表示の為の要素（触るな）フリじゃないよ-->
         <div>
           <img id="ContentTitle_Image" />
           <div
@@ -213,6 +261,7 @@
           </section>
         </div>
 
+        <!--いい感じにブラー処理-->
         <img
           src="https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest/data/WEBPimages/BackFog.webp"
           alt=""
@@ -223,6 +272,8 @@
             margin-bottom: -20px;
           "
         />
+
+        <!--一番下のバーナー-->
         <div style="background-color: black; text-align: center; margin: 0px">
           <div
             style="
@@ -240,6 +291,13 @@
               alt=""
               style="width: 100%; height: auto; object-fit: contain"
             />
+
+            <!--
+            バーナーの文言です、適宜変更してOk
+            @Raymeela ってなってるところは私の X アカウントです。
+            プログラムで困ったら、ここに DM をください。
+            対応します。
+            -->
             <p style="color: #999999">
               当日も是非ご来場下さい<br />
               筑駒折紙研究会2025Presents<br />

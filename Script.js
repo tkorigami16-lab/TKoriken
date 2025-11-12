@@ -1,3 +1,12 @@
+/**
+ * このプログラミングコードは修正不要です。
+ * 情報の知識に自信がないなら、絶対に触らないようにしてください。
+ * あと私がほとんどコメントを遺していないので、
+ * 変更を行いたい情強の方も気を付けてください。
+ * ChatGPT にコード全文を送り付ければ、コードの内容とか解説してくれると思うので
+ * 活用すると良いと思います。
+ */
+
 class ProductBox {
   constructor(image, box, parent, RL) {
     this.img = image;
@@ -6,17 +15,6 @@ class ProductBox {
     this.RL = RL; //R:True,L:False
     //this.ReSetHeight();
   }
-
-  ReSetHeight() {
-    let height = 0;
-    const para = this.con.querySelectorAll("p");
-    para.forEach((p) => {
-      height += p.height;
-    });
-
-    //this.img.style.height = `${height}px`;
-  }
-
   ReOrder(small) {
     if (small) {
       this.parent.style.display = "block";
@@ -60,7 +58,57 @@ let contentLoading = false;
 let fadeImages = null;
 let fadeObserver = null;
 const basePath = "https://tkorigami16-lab.github.io/TKoriken"; //GitHub の親ページを取得
-const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@v1.0.9";
+
+/*
+プログラムで修正が必要な部分はこの下部分だけです。
+他の部分には絶対に触らないこと（触るな）大事な事なので二回書きました。
+
+コードの変更が必要な部分は以下の
+
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@ver2025";
+
+という部分の @ 以降の文字列だけです。
+@以降の文字はページを開くときに参照するオンライン上の TKoriken リポジトリのリリースファイルを指定しています。
+上記の場合 ver2025 というバージョンにアクセスすることを意味しています。
+
+画像データやテキストデータは　GitHub で新しくリリースを作ることで
+オンライン上でアクセスできるようになります。
+ですからローカルで Web ページの内容を更新したら、適宜リリースを新たに作成することで
+外部からアクセスして見れる Web の内容を更新されます。
+
+自分で新しくリリースを作って、それにアクセスすることになるので
+作成するリリースのバージョン名と @ 以降の文字列を一致させる必要があります。
+この文字列が間違っていると、古いバージョンが表示されたり、真っ白のページが表紙されたりします。
+
+【リリースのバージョンの確認方法】
+Step.1
+GitHub DeskTop から View On Online を選択し、ブラウザで TKoriken のリポジトリを開きます。
+あるいはこのリンクにアクセスしても良いです。 ⇒ https://github.com/tkorigami16-lab/TKoriken
+
+Step.2
+このページの <> Code というタブの右側に Releases という項目があるので、ここを開きます
+そうしたら過去のリリースノートが見られるはずです。
+各リリース名（太字で tk_oriken とか書いている奴）の下に小さな文字でバージョンが書かれています。
+
+
+【新規リリースの作り方】
+Step.1
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@ver2025";
+の@以降の文字列を変更します。変更した文字列は後で必要になるので覚えておいてください。
+
+Step.2
+上と同様のページに移動し、画面上方右寄りの [Draft a new Release] というボタンをクリックし、
+新しいリリースを作成するページに移動します。
+
+Step.3
+ページ上の [Select tag] ボタンを選択し　Create new tag をクリックし、新しいリリースのバージョン名を記録します。
+この時入力するのは、Step.1 で変更した後の文字列です。
+Release title は別になんでもいいです。迷ったら "tk_oriken" とでもしておいてください。
+Release note もなんでもいいです。めんどいので白紙で ok 
+ここまで設定出来たら
+*/
+
+const jsPath = "https://cdn.jsdelivr.net/gh/tkorigami16-lab/TKoriken@latest";
 
 //画像が開かれたときに Awake() を発火するようにする
 document.addEventListener("DOMContentLoaded", async () => {
